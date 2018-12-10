@@ -1,0 +1,86 @@
+<?xml version="1.0" encoding="utf-8"?>
+<resources>
+
+    <color name="colorTheme">#FF6600</color>
+    <color name="color_e1">#e1e1e1</color>
+    <color name="color_f5">#f5f5f5</color>
+    <color name="color_8f">#8f8f8f</color>
+    <color name="common_light_color">#ff5100</color>
+    <color name="white">#fff</color>
+    <color name="black">#000</color>
+    <color name="flash_sale_tab">#FFBA00</color>
+
+    <color name="m_dialog_ok_n">#666666</color>
+    <color name="m_dialog_ok_h">#fb6d3c</color>
+    <color name="m_dialog_cancel_n">#666666</color>
+    <color name="m_dialog_cancel_h">#000</color>
+
+    <color name="rgb_150_150_153">#969699</color>
+
+    <!--系统颜色-->
+    <!--<color name="colorPrimary">#fde42d27</color>-->
+    <!--<color name="colorPrimaryDark">#fde42d27</color>-->
+    <!--<color name="colorAccent">#fde42d27</color>-->
+    <color name="colorPrimary">#e42d27</color>
+    <color name="colorPrimaryDark">#e42d27</color>
+    <color name="colorAccent">#e42d27</color>
+
+    <!--app颜色-->
+    <!--白色-->
+    <color name="color_white">#FFFFFF</color>
+    <!--黑色-->
+    <color name="color_black">#000000</color>
+    <!--红色-->
+    <color name="color_red">#fde42d27</color>
+    <color name="color_red_dark">#fbc9211e</color>
+    <!--绿色-->
+    <color name="color_green">#66D020</color>
+    <!--背景灰-->
+    <color name="color_bg">#F4F4F4</color>
+    <!--分割线灰色-->
+    <color name="color_diveder">#E7E7EA</color>
+    <!--深灰-->
+    <color name="color_dark_gray">#434343</color>
+    <!--中灰-->
+    <color name="color_mid_gray">#919191</color>
+    <!--浅灰-->
+    <color name="color_light_gray">#AAE1DBDB</color>
+    <!--轮播指示器背景-->
+    <color name="color_idicator_bg">#50A9A2A2</color>
+    <color name="color_idicator_unselect">#9ac6bdbd</color>
+    <!--首页Tab红-->
+    <color name="color_tab_red">#FFEAEC</color>
+    <!--首页Tab蓝-->
+    <color name="color_tab_blue">#E6F2FE</color>
+
+    <color name="color_transparent">#00000000</color>
+    <color name="color_75_white">#C0FFFFFF</color>
+    <color name="color_50_white">#80FFFFFF</color>
+    <color name="color_25_white">#40FFFFFF</color>
+    <color name="color_15_white">#26FFFFFF</color>
+    <color name="color_10_white">#19FFFFFF</color>
+
+    <color name="color_pure_black">#000000</color>
+    <color name="color_75_pure_black">#C0000000</color>
+    <color name="color_60_pure_black">#99000000</color>
+    <color name="color_50_pure_black">#80000000</color>
+    <color name="color_25_pure_black">#40000000</color>
+    <color name="color_15_pure_black">#26000000</color>
+    <color name="color_10_pure_black">#19000000</color>
+
+
+    <color name="color_gray_1">#353C46</color>
+    <color name="color_gray_2">#49505A</color>
+    <color name="color_gray_3">#5D646E</color>
+    <color name="color_gray_4">#717882</color>
+    <color name="color_gray_5">#858C96</color>
+    <color name="color_gray_6">#99A0AA</color>
+    <color name="color_gray_7">#ADB4BE</color>
+    <color name="color_gray_8">#C4C8D0</color>
+    <color name="color_gray_9">#D8DCE4</color>
+    <color name="font_black_6">#e0e0e0</color>
+
+    <color name="color_list_separator">#DEE0E2</color>
+    <color name="color_list_pressed">#DEE0E2</color>
+
+</resources>
