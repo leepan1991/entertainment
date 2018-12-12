@@ -46,7 +46,8 @@ public class SplashActivity extends BaseMvpActivity<SplashView, SplashPresenter>
         new Handler().postDelayed(new Runnable() {
             @Override
             public void run() {
-                mPresenter.checkVersionUpdate();
+//                mPresenter.checkVersionUpdate();
+                startMainActivity();
             }
         }, 500);
     }

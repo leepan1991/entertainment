@@ -25,7 +25,7 @@ public class LogUtils {
         LogUtils.isDebug = isDebug;
     }
 
-    private static final String TAG = "ok-master";
+    private static final String TAG = "TAG";
 
     //================================= 下面四个是默认tag的函数===================================
     public static void i(String msg) {

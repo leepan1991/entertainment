@@ -10,7 +10,7 @@ public class APIFactory {
 
     public static final String BASE_URL = "http://film.ath.pub/app/";
 
-    public static final String LOGIN = "center/member/login";
+    public static final String BOTTOM_URL = "index.php?i=1&c=entry&eid=19&apis=ios";
 
 
 }
