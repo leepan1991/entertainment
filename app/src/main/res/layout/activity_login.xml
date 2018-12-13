@@ -1,0 +1,105 @@
+<?xml version="1.0" encoding="utf-8"?>
+<ScrollView xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="#fff">
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:orientation="vertical"
+        android:paddingLeft="40dp"
+        android:paddingTop="@dimen/status_bar_size"
+        android:paddingRight="40dp">
+
+        <ImageView
+            android:layout_width="80dp"
+            android:layout_height="80dp"
+            android:layout_gravity="center_horizontal"
+            android:layout_marginTop="60dp"
+            android:src="@mipmap/ic_launcher" />
+
+        <cn.innovativest.entertainment.widget.ClearEditText
+            android:id="@+id/userphone_cet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="60dp"
+            android:background="#fff"
+            android:hint="请输入手机号"
+            android:inputType="number"
+            android:maxLength="11"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="8dp"
+            android:background="#ddd" />
+
+        <cn.innovativest.entertainment.widget.ClearEditText
+            android:id="@+id/password_cet"
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="28dp"
+            android:background="#fff"
+            android:hint="请输入密码"
+            android:inputType="textPassword"
+            android:maxLength="16"
+            android:textColorHint="@android:color/darker_gray"
+            android:textSize="14sp" />
+
+        <View
+            android:layout_width="match_parent"
+            android:layout_height="1px"
+            android:layout_marginTop="8dp"
+            android:background="#ddd" />
+
+        <FrameLayout
+            android:layout_width="match_parent"
+            android:layout_height="wrap_content"
+            android:layout_marginTop="14dp">
+
+            <TextView
+                android:id="@+id/register_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_gravity="end"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:text="ATH授权"
+                android:textColor="#ff2b00"
+                android:textSize="14sp" />
+
+            <TextView
+                android:id="@+id/resetpwd_tv"
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:paddingTop="4dp"
+                android:paddingBottom="4dp"
+                android:text="忘记密码？"
+                android:textColor="#007ede"
+                android:textSize="14sp"
+                android:visibility="invisible" />
+        </FrameLayout>
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="0dp"
+            android:layout_weight="1"
+            android:orientation="vertical">
+
+            <Button
+                android:id="@+id/login_btn"
+                style="@style/Base.Widget.AppCompat.Button.Borderless"
+                android:layout_width="match_parent"
+                android:layout_height="42dp"
+                android:layout_marginTop="54dp"
+                android:background="@drawable/bg_btn_login"
+                android:text="登录"
+                android:textColor="#fff"
+                android:textSize="16sp" />
+        </LinearLayout>
+    </LinearLayout>
+
+</ScrollView>

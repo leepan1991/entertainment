@@ -49,6 +49,9 @@
         <activity
             android:name=".ui.act.TabActivity"
             android:launchMode="singleTask" />
+        <activity android:name=".ui.act.LoginActivity" />
+
+        <activity android:name=".ui.act.ATHAuthAct" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

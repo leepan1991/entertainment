@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
-    android:background="@color/color_gray_7"
+    android:background="@color/font_black_6"
     android:orientation="vertical">
 
     <ScrollView
@@ -22,6 +22,7 @@
                 android:id="@+id/lltTop"
                 android:layout_width="match_parent"
                 android:layout_height="230dp"
+                android:background="@mipmap/icon_geren_02"
                 android:gravity="center"
                 android:orientation="vertical">
 
@@ -78,7 +79,7 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_gravity="center"
-                                android:src="@mipmap/ic_launcher" />
+                                android:src="@mipmap/icon_zjongxin_07" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -87,7 +88,8 @@
                                 android:layout_marginTop="5dp"
                                 android:gravity="center"
                                 android:maxLines="1"
-                                android:text="观看记录" />
+                                android:text="观看记录"
+                                android:textColor="@color/white" />
 
                         </LinearLayout>
 
@@ -109,16 +111,18 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_gravity="center"
-                                android:src="@mipmap/ic_launcher" />
+                                android:src="@mipmap/icon_zjongxin_09" />
 
                             <TextView
+                                android:id="@+id/tvwOpenVip"
                                 android:layout_width="wrap_content"
                                 android:layout_height="wrap_content"
                                 android:layout_gravity="center_horizontal"
                                 android:layout_marginTop="5dp"
                                 android:gravity="center"
                                 android:maxLines="1"
-                                android:text="会员开通" />
+                                android:text="会员开通"
+                                android:textColor="@color/white" />
 
                         </LinearLayout>
 
@@ -140,7 +144,7 @@
                                 android:layout_width="30dp"
                                 android:layout_height="30dp"
                                 android:layout_gravity="center"
-                                android:src="@mipmap/ic_launcher" />
+                                android:src="@mipmap/icon_zjongxin_11" />
 
                             <TextView
                                 android:layout_width="wrap_content"
@@ -149,7 +153,8 @@
                                 android:layout_marginTop="5dp"
                                 android:gravity="center"
                                 android:maxLines="1"
-                                android:text="订单管理" />
+                                android:text="订单管理"
+                                android:textColor="@color/white" />
 
                         </LinearLayout>
 
@@ -185,12 +190,12 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:layout_gravity="center_vertical"
-                            android:paddingLeft="20dp"
+                            android:layout_marginLeft="20dp"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/ic_launcher" />
+                            android:src="@mipmap/icon_geren_05" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -244,12 +249,12 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:layout_gravity="center_vertical"
-                            android:paddingLeft="20dp"
+                            android:layout_marginLeft="20dp"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/ic_launcher" />
+                            android:src="@mipmap/icon_geren_12" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -297,13 +302,13 @@
 
                     <ImageView
                         android:id="@+id/ivMineCollect"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:paddingLeft="20dp"
+                        android:layout_marginLeft="20dp"
                         android:scaleType="fitXY"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@mipmap/shoucang" />
 
                     <TextView
                         android:id="@+id/tvOrderManagement"
@@ -343,12 +348,12 @@
                         android:orientation="horizontal">
 
                         <ImageView
-                            android:layout_width="wrap_content"
-                            android:layout_height="wrap_content"
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
                             android:layout_gravity="center_vertical"
-                            android:paddingLeft="20dp"
+                            android:layout_marginLeft="20dp"
                             android:scaleType="fitXY"
-                            android:src="@mipmap/ic_launcher" />
+                            android:src="@mipmap/bangding" />
 
                         <TextView
                             android:layout_width="wrap_content"
@@ -388,27 +393,27 @@
                 </RelativeLayout>
 
                 <RelativeLayout
-                    android:id="@+id/rltCoinManagement"
+                    android:id="@+id/rltLogout"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:background="@android:color/white">
 
                     <ImageView
-                        android:id="@+id/ivCoinManagement"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/ivLogout"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:paddingLeft="20dp"
+                        android:layout_marginLeft="20dp"
                         android:scaleType="fitXY"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@mipmap/mine_logout" />
 
                     <TextView
-                        android:id="@+id/tvCoinManagement"
+                        android:id="@+id/tvLogout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/ivCoinManagement"
+                        android:layout_toRightOf="@id/ivLogout"
                         android:maxLines="1"
                         android:paddingLeft="10dp"
                         android:text="退出登录"
@@ -416,7 +421,7 @@
                         android:textSize="14sp" />
 
                     <ImageView
-                        android:id="@+id/ivRightCoinManagement"
+                        android:id="@+id/ivRightLogout"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"
@@ -428,28 +433,28 @@
 
 
                 <RelativeLayout
-                    android:id="@+id/rltRealName"
+                    android:id="@+id/rltRecharge"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
                     android:layout_marginTop="10dp"
                     android:background="@android:color/white">
 
                     <ImageView
-                        android:id="@+id/ivRealName"
-                        android:layout_width="wrap_content"
-                        android:layout_height="wrap_content"
+                        android:id="@+id/ivRecharge"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
                         android:layout_alignParentLeft="true"
                         android:layout_centerVertical="true"
-                        android:paddingLeft="20dp"
+                        android:layout_marginLeft="20dp"
                         android:scaleType="fitXY"
-                        android:src="@mipmap/ic_launcher" />
+                        android:src="@mipmap/icon_geren_14" />
 
                     <TextView
-                        android:id="@+id/tvRealName"
+                        android:id="@+id/tvRecharge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
-                        android:layout_toRightOf="@id/ivRealName"
+                        android:layout_toRightOf="@id/ivRecharge"
                         android:maxLines="1"
                         android:paddingLeft="10dp"
                         android:text="ATH充值"
@@ -457,7 +462,7 @@
                         android:textSize="14sp" />
 
                     <ImageView
-                        android:id="@+id/ivRightRealName"
+                        android:id="@+id/ivRightRecharge"
                         android:layout_width="wrap_content"
                         android:layout_height="wrap_content"
                         android:layout_alignParentRight="true"

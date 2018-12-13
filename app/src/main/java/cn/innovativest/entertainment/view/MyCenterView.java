@@ -1,6 +1,6 @@
 package cn.innovativest.entertainment.view;
 
-import cn.innovativest.entertainment.bean.TabBean;
+import cn.innovativest.entertainment.bean.UserInfoBean;
 import cn.innovativest.entertainment.common.HttpRespond;
 
 /**
@@ -8,5 +8,5 @@ import cn.innovativest.entertainment.common.HttpRespond;
  */
 
 public interface MyCenterView {
-    void onGetBottomTab(HttpRespond<TabBean> respond);
+    void getUserInfo(HttpRespond<UserInfoBean> respond);
 }
