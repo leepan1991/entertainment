@@ -1,5 +1,8 @@
 package cn.innovativest.entertainment.view;
 
+import java.util.List;
+
+import cn.innovativest.entertainment.bean.RecordBean;
 import cn.innovativest.entertainment.bean.UserInfoBean;
 import cn.innovativest.entertainment.common.HttpRespond;
 
@@ -7,8 +10,6 @@ import cn.innovativest.entertainment.common.HttpRespond;
  * Created by victor on 2018/4/11.
  */
 
-public interface MyCenterView {
-    void getUserInfo(HttpRespond<UserInfoBean> respond);
-
-    void rechargeComplete(HttpRespond respond);
+public interface RecordView {
+    void getRecord(HttpRespond<List<RecordBean>> respond);
 }

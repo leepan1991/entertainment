@@ -231,7 +231,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="20dp"
                         android:scaleType="fitXY"
-                        android:src="@mipmap/mine_right_arrow" />
+                        android:src="@mipmap/mine_right_arrow"
+                        android:visibility="invisible" />
                 </RelativeLayout>
 
                 <RelativeLayout
@@ -290,7 +291,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="20dp"
                         android:scaleType="fitXY"
-                        android:src="@mipmap/mine_right_arrow" />
+                        android:src="@mipmap/mine_right_arrow"
+                        android:visibility="invisible" />
                 </RelativeLayout>
 
 
@@ -298,7 +300,8 @@
                     android:id="@+id/rltMineCollect"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
-                    android:background="@android:color/white">
+                    android:background="@android:color/white"
+                    android:visibility="gone">
 
                     <ImageView
                         android:id="@+id/ivMineCollect"
@@ -389,7 +392,8 @@
                         android:layout_centerVertical="true"
                         android:layout_marginRight="20dp"
                         android:scaleType="fitXY"
-                        android:src="@mipmap/mine_right_arrow" />
+                        android:src="@mipmap/mine_right_arrow"
+                        android:visibility="invisible" />
                 </RelativeLayout>
 
                 <RelativeLayout

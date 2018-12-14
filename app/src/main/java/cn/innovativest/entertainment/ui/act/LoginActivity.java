@@ -12,6 +12,7 @@ import butterknife.BindView;
 import butterknife.OnClick;
 import cn.innovativest.entertainment.R;
 import cn.innovativest.entertainment.base.BaseMvpActivity;
+import cn.innovativest.entertainment.bean.LoginBean;
 import cn.innovativest.entertainment.common.HttpRespond;
 import cn.innovativest.entertainment.presenter.LoginPresenter;
 import cn.innovativest.entertainment.utils.SPUtils;
@@ -82,7 +83,7 @@ public class LoginActivity extends BaseMvpActivity<LoginView, LoginPresenter> im
     }
 
     @Override
-    public void loginSuccess(HttpRespond respond) {
+    public void loginSuccess(HttpRespond<LoginBean> respond) {
         dismissProgressDialog();
         int itemId = getIntent().getIntExtra("item_id", 0);
         toast(respond.message);
@@ -91,6 +92,7 @@ public class LoginActivity extends BaseMvpActivity<LoginView, LoginPresenter> im
         // 登录成功后修改本地登录标记，并存储用户名(手机号)、密码、token、加解密参数
         SPUtils.put(this, "is_login", true);
         SPUtils.put(this, "user_phone", userphoneCet.getText().toString());
+        SPUtils.put(this, "user_cookie_pre", respond.data.getCookie_ico());
         Intent intent = new Intent();
         intent.putExtra("item_id", itemId);
         intent.putExtra(LoginActivity.IS_LOGINED, true);
@@ -109,7 +111,7 @@ public class LoginActivity extends BaseMvpActivity<LoginView, LoginPresenter> im
 
     @OnClick(R.id.register_tv)
     public void onRegisterTvClicked() {
-        startActivity(new Intent(LoginActivity.this, ATHAuthAct.class));
+        startActivity(new Intent(LoginActivity.this, ATHAuthActivity.class));
     }
 
     @Override

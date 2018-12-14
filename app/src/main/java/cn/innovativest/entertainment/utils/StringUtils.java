@@ -1,7 +1,9 @@
 package cn.innovativest.entertainment.utils;
 
+import android.text.TextUtils;
 import android.widget.EditText;
 
+import java.text.SimpleDateFormat;
 import java.util.ArrayList;
 import java.util.Iterator;
 
@@ -217,6 +219,24 @@ public class StringUtils {
             return str.replaceAll(strContains, strReplace);
         } else {
             return "";
+        }
+    }
+
+    /**
+     * 时间转换
+     *
+     * @param format
+     * @param time
+     * @return
+     */
+    public static String formatTimeToFormat(String format, long time) {
+        if (TextUtils.isEmpty(format))
+            return String.valueOf(time);
+        SimpleDateFormat sdf = new SimpleDateFormat(format);
+        if (String.valueOf(time).length() < 13) {
+            return sdf.format(time * 1000l);
+        } else {
+            return sdf.format(time);
         }
     }
 

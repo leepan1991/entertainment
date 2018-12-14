@@ -39,7 +39,9 @@
 
         <activity
             android:name=".ui.act.SplashActivity"
-            android:theme="@style/AppTheme.FullScreen">
+            android:screenOrientation="portrait"
+            android:theme="@style/AppTheme.FullScreen"
+            android:windowSoftInputMode="stateUnchanged|adjustResize">
             <intent-filter>
                 <action android:name="android.intent.action.MAIN" />
 
@@ -48,10 +50,35 @@
         </activity>
         <activity
             android:name=".ui.act.TabActivity"
-            android:launchMode="singleTask" />
-        <activity android:name=".ui.act.LoginActivity" />
+            android:launchMode="singleTask"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+        <activity
+            android:name=".ui.act.LoginActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
 
-        <activity android:name=".ui.act.ATHAuthAct" />
+        <activity
+            android:name=".ui.act.ATHAuthActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+
+        <activity
+            android:name=".ui.act.RecordActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+        <activity
+            android:name=".ui.act.OrderActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+        <activity
+            android:name=".ui.act.HtmlActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
+        <activity
+            android:name=".ui.act.VipActivity"
+            android:screenOrientation="portrait"
+            android:windowSoftInputMode="stateUnchanged|adjustResize" />
 
         <provider
             android:name="android.support.v4.content.FileProvider"

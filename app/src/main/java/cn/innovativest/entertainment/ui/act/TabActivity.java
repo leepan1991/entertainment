@@ -22,7 +22,11 @@ import cn.innovativest.entertainment.bean.TabBean;
 import cn.innovativest.entertainment.common.HttpRespond;
 import cn.innovativest.entertainment.presenter.TabPresenter;
 import cn.innovativest.entertainment.ui.frag.CommonFragment;
+import cn.innovativest.entertainment.ui.frag.GetFilmFragment;
+import cn.innovativest.entertainment.ui.frag.IndexFragment;
 import cn.innovativest.entertainment.ui.frag.MyCenterFragment;
+import cn.innovativest.entertainment.ui.frag.SearchFilmFragment;
+import cn.innovativest.entertainment.ui.frag.TvFragment;
 import cn.innovativest.entertainment.utils.LogUtils;
 import cn.innovativest.entertainment.view.TabView;
 import cn.innovativest.entertainment.widget.NoScrollViewPager;
@@ -34,6 +38,13 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
     NoScrollViewPager mVpHome;
     @BindView(R.id.tb_main)
     JPTabBar tbMain;
+
+    private SearchFilmFragment searchFilmFragment;
+    private TvFragment tvFragment;
+    private IndexFragment indexFragment;
+    private GetFilmFragment getFilmFragment;
+
+    private UniFragmentPagerAdapter uniFragmentPagerAdapter;
     @Titles
     private static final String[] tabNames = {"搜片", "电视", "推荐", "求片", "我的"};
     @NorIcons
@@ -61,12 +72,23 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
 
     @Override
     public void initView() {
-        mVpHome.setOffscreenPageLimit(4);
+        mVpHome.setOffscreenPageLimit(5);
         mFragments = new ArrayList<>();
 //        mFragments.add(new FirstTabFrag());
 //        mFragments.add(new FlashSaleFragment());  //限时抢购
 //        mFragments.add(new IntegralStoreFragment());
 //        mFragments.add(new MyCenterFragment());
+        searchFilmFragment = new SearchFilmFragment();
+        mFragments.add(searchFilmFragment);
+        tvFragment = new TvFragment();
+        mFragments.add(tvFragment);
+        indexFragment = new IndexFragment();
+        mFragments.add(indexFragment);
+        getFilmFragment = new GetFilmFragment();
+        mFragments.add(getFilmFragment);
+        mFragments.add(new MyCenterFragment());
+        uniFragmentPagerAdapter = new UniFragmentPagerAdapter(getSupportFragmentManager(), mFragments);
+        mVpHome.setAdapter(uniFragmentPagerAdapter);
         initTab();
     }
 
@@ -83,15 +105,6 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
      * 初始化TAB标签
      */
     private void initTab() {
-        // 登录状态检测，确认是否展示我的页面
-        mVpHome.setCheckLoginListener(new NoScrollViewPager.CheckLoginListener() {
-            @Override
-            public void jumpToLogin(int item) {
-//                Intent loginIntent = new Intent(TabActivity.this, LoginActivity.class);
-//                loginIntent.putExtra("item_id", item);
-//                startActivityForResult(loginIntent, LoginActivity.REQUEST_CODE);
-            }
-        });
 
         tbMain.setContainer(mVpHome);
     }
@@ -102,14 +115,14 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
 //        UMShareAPI.get(this).onActivityResult(requestCode, resultCode, data);
         LogUtils.e(requestCode + " " + resultCode);
         switch (requestCode) {
-//            case LoginActivity.REQUEST_CODE:
-//                if (resultCode == LoginActivity.RESULT_CODE &&
-//                        data.getBooleanExtra(LoginActivity.IS_LOGINED, false)) {
-//                    if (mFragments != null) {
-//                        mVpHome.setCurrentItem(data.getIntExtra("item_id", 0));
-//                    }
-//                }
-//                break;
+            case LoginActivity.REQUEST_CODE:
+                if (resultCode == LoginActivity.RESULT_CODE &&
+                        data.getBooleanExtra(LoginActivity.IS_LOGINED, false)) {
+                    if (mFragments != null) {
+                        mVpHome.setCurrentItem(data.getIntExtra("item_id", 0));
+                    }
+                }
+                break;
 //            case GO_SHOP:
 //                if (resultCode == 11 && mFragments != null) {
 //                    mVpHome.setCurrentItem(2);
@@ -128,50 +141,52 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
     @Override
     public void onGetBottomTab(HttpRespond<TabBean> respond) {
 //        Log.e("taoPwd", "onGetTaoPwd: " + respond.message + " " + respond.data.value);
-//        if (!TextUtils.isEmpty(respond.data.value)) {
-//            TaoPwdDialog dialog = TaoPwdDialog.newInstance(new TaoPwdDialog.OnConfirmListener() {
-//                @Override
-//                public void onOkClick() {
-//                    // TODO: 2018/4/11 处理淘口令
-//                }
-//            }, respond.data.value);
-//            dialog.show(getSupportFragmentManager(), "tao_pwd");
-//        }
-
         if (respond != null && respond.data != null) {
 
             if (!TextUtils.isEmpty(respond.data.getSoupian())) {
-                CommonFragment searchFilmFragment = new CommonFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("url", respond.data.getSoupian());
-                searchFilmFragment.setArguments(bundle);
-                mFragments.add(searchFilmFragment);
+//                SearchFilmFragment searchFilmFragment = new SearchFilmFragment();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("url", respond.data.getSoupian());
+//                searchFilmFragment.setArguments(bundle);
+//                mFragments.add(searchFilmFragment);
+                searchFilmFragment.setUrl(respond.data.getSoupian());
             }
             if (!TextUtils.isEmpty(respond.data.getDianshi())) {
-                CommonFragment tvFragment = new CommonFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("url", respond.data.getDianshi());
-                tvFragment.setArguments(bundle);
-                mFragments.add(tvFragment);
+//                TvFragment tvFragment = new TvFragment();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("url", respond.data.getDianshi());
+//                tvFragment.setArguments(bundle);
+//                mFragments.add(tvFragment);
+                tvFragment.setUrl(respond.data.getDianshi());
             }
             if (!TextUtils.isEmpty(respond.data.getShouye())) {
-                CommonFragment indexFragment = new CommonFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("url", respond.data.getShouye());
-                indexFragment.setArguments(bundle);
-                mFragments.add(indexFragment);
+//                IndexFragment indexFragment = new IndexFragment();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("url", respond.data.getShouye());
+//                indexFragment.setArguments(bundle);
+//                mFragments.add(indexFragment);
+                indexFragment.setUrl(respond.data.getShouye());
             }
             if (!TextUtils.isEmpty(respond.data.getQiupian())) {
-                CommonFragment getFilmFragment = new CommonFragment();
-                Bundle bundle = new Bundle();
-                bundle.putString("url", respond.data.getQiupian());
-                getFilmFragment.setArguments(bundle);
-                mFragments.add(getFilmFragment);
+//                GetFilmFragment getFilmFragment = new GetFilmFragment();
+//                Bundle bundle = new Bundle();
+//                bundle.putString("url", respond.data.getQiupian());
+//                getFilmFragment.setArguments(bundle);
+//                mFragments.add(getFilmFragment);
+                getFilmFragment.setUrl(respond.data.getQiupian());
             }
 
-            mFragments.add(new MyCenterFragment());
-
-            mVpHome.setAdapter(new UniFragmentPagerAdapter(getSupportFragmentManager(), mFragments));
+//            mFragments.add(new MyCenterFragment());
+            uniFragmentPagerAdapter.notifyDataSetChanged();
+            // 登录状态检测，确认是否展示我的页面
+            mVpHome.setCheckLoginListener(new NoScrollViewPager.CheckLoginListener() {
+                @Override
+                public void jumpToLogin(int item) {
+                    Intent loginIntent = new Intent(TabActivity.this, LoginActivity.class);
+                    loginIntent.putExtra("item_id", item);
+                    startActivityForResult(loginIntent, LoginActivity.REQUEST_CODE);
+                }
+            });
         }
     }
 

@@ -1,0 +1,115 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="281dp"
+    android:layout_height="wrap_content"
+    android:background="@drawable/dialog_bg_shape"
+    android:gravity="center_horizontal"
+    android:minWidth="250dp"
+    android:orientation="vertical">
+
+    <TextView
+        android:id="@+id/dialog_msg_tv"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:layout_gravity="left"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="15dp"
+        android:layout_marginRight="10dp"
+        android:gravity="center"
+        android:text="充值"
+        android:textColor="@android:color/black" />
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="10dp"
+        android:layout_marginRight="10dp"
+        android:background="#c7c7c7" />
+
+    <RelativeLayout
+        android:layout_width="match_parent"
+        android:layout_height="150dp"
+        android:layout_gravity="center"
+        android:layout_marginLeft="10dp"
+        android:layout_marginTop="30dp"
+        android:layout_marginRight="10dp">
+
+        <TextView
+            android:id="@+id/dgSDSD"
+            android:layout_width="wrap_content"
+            android:layout_height="wrap_content"
+            android:layout_alignParentLeft="true"
+            android:layout_centerVertical="true"
+            android:layout_marginLeft="10dp"
+            android:text="充值码"
+            android:textColor="#333333" />
+
+        <ImageView
+            android:id="@+id/iv_zhang"
+            android:layout_width="wrap_content"
+            android:layout_height="match_parent"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@+id/dgSDSD"
+            android:paddingLeft="10dp"
+            android:scaleType="fitXY"
+            android:src="@mipmap/order_buy_hor_line" />
+
+
+        <EditText
+            android:id="@+id/edtSDSD"
+            style="@style/mLoginEt"
+            android:layout_height="150dp"
+            android:layout_centerVertical="true"
+            android:layout_toRightOf="@id/iv_zhang"
+            android:background="@android:color/transparent"
+            android:gravity="left|top"
+            android:hint="请输入充值码"
+            android:inputType="textMultiLine"
+            android:maxLines="5"
+            android:padding="5dp"
+            android:textColor="#333333"
+            android:textColorHint="#DCDDDD"
+            android:textSize="14sp" />
+
+    </RelativeLayout>
+
+
+    <View
+        android:layout_width="match_parent"
+        android:layout_height="1px"
+        android:layout_marginTop="30dp"
+        android:background="#c7c7c7" />
+
+    <LinearLayout
+        android:layout_width="match_parent"
+        android:layout_height="46dp">
+
+        <Button
+            android:id="@+id/dialog_left_bt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:maxLines="1"
+            android:text="取消"
+            android:textColor="@drawable/dialog_cancel_color_slct" />
+
+        <View
+            android:id="@+id/dialog_line"
+            android:layout_width="1px"
+            android:layout_height="match_parent"
+            android:background="#c7c7c7" />
+
+        <Button
+            android:id="@+id/dialog_right_bt"
+            android:layout_width="0dp"
+            android:layout_height="match_parent"
+            android:layout_weight="1"
+            android:background="@null"
+            android:maxLines="1"
+            android:text="充值"
+            android:textColor="@drawable/dialog_ok_color_slct" />
+    </LinearLayout>
+
+</LinearLayout>

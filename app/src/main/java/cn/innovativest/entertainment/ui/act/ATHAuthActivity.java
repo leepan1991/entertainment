@@ -18,7 +18,7 @@ import cn.innovativest.entertainment.utils.LogUtils;
 import cn.innovativest.entertainment.view.AuthView;
 import cn.innovativest.entertainment.widget.ClearEditText;
 
-public class ATHAuthAct extends BaseMvpActivity<AuthView, AuthPresenter> implements AuthView {
+public class ATHAuthActivity extends BaseMvpActivity<AuthView, AuthPresenter> implements AuthView {
 
     @BindView(R.id.userphone_cet)
     ClearEditText userphoneCet;

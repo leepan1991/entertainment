@@ -83,4 +83,7 @@
     <color name="color_list_separator">#DEE0E2</color>
     <color name="color_list_pressed">#DEE0E2</color>
 
+    <color name="bg_btn_actionbar">#20ffffff</color>
+    <color name="bg_banner_top">#0175C6</color>
+
 </resources>

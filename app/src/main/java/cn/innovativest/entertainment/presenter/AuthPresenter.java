@@ -28,7 +28,7 @@ public class AuthPresenter extends BasePresent<AuthView> {
         } catch (JSONException e) {
             e.printStackTrace();
         }
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), requestData.toString());
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), "phone=" + phone + "&password=" + password + "&password1=" + password1);
         add(RetrofitFactory.getInstance().getApiService().auth(requestBody), new Consumer<HttpRespond>() {
             @Override
             public void accept(HttpRespond respond) throws Exception {

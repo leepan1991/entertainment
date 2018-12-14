@@ -32,19 +32,19 @@ public class NoScrollViewPager extends ViewPager {
     @Override
     public void setCurrentItem(int item) {
         boolean isLogin = (boolean) SPUtils.get(getContext(), "is_login", false);
-//        if ((item == 3 || item == 2) && !isLogin)
-//            listener.jumpToLogin(item);
-//        else
-        super.setCurrentItem(item);
+        if ((item == 4) && !isLogin)
+            listener.jumpToLogin(item);
+        else
+            super.setCurrentItem(item);
     }
 
     @Override
     public void setCurrentItem(int item, boolean smoothScroll) {
         boolean isLogin = (boolean) SPUtils.get(getContext(), "is_login", false);
-//        if ((item == 3 || item == 2) && !isLogin)
-//            listener.jumpToLogin(item);
-//        else
-        super.setCurrentItem(item, smoothScroll);
+        if ((item == 4) && !isLogin)
+            listener.jumpToLogin(item);
+        else
+            super.setCurrentItem(item, smoothScroll);
     }
 
     @Override

@@ -1,5 +1,11 @@
 package cn.innovativest.entertainment.rxbase;
 
+import java.util.List;
+
+import cn.innovativest.entertainment.bean.EBuyBean;
+import cn.innovativest.entertainment.bean.LoginBean;
+import cn.innovativest.entertainment.bean.OrderBean;
+import cn.innovativest.entertainment.bean.RecordBean;
 import cn.innovativest.entertainment.bean.TabBean;
 import cn.innovativest.entertainment.bean.UserInfoBean;
 import cn.innovativest.entertainment.common.HttpRespond;
@@ -16,20 +22,33 @@ import retrofit2.http.POST;
 public interface ApiService {
 
 
-//
-//    @POST(APIFactory.CANCERORDER)
-//    Observable<HttpRespond> cancelOrder(
-//            @Body RequestBody requestBody);
-
     @GET(APIFactory.BOTTOM_URL)
     Observable<HttpRespond<TabBean>> getBottomTab();
 
-    @GET(APIFactory.GETUSERINFO)
-    Observable<HttpRespond<UserInfoBean>> getUserInfo();
+    @POST(APIFactory.GET_USER_INFO)
+    Observable<HttpRespond<UserInfoBean>> getUserInfo(@Body RequestBody requestBody);
 
     @POST(APIFactory.LOGIN)
-    Observable<HttpRespond> login(@Body RequestBody requestBody);
+    Observable<HttpRespond<LoginBean>> login(@Body RequestBody requestBody);
 
     @POST(APIFactory.AUTH)
     Observable<HttpRespond> auth(@Body RequestBody requestBody);
+
+    @GET(APIFactory.DEFAULT_PAGE)
+    Observable<HttpRespond<TabBean>> getDefaultPage();
+
+    @POST(APIFactory.RECORD)
+    Observable<HttpRespond<List<RecordBean>>> getRecord(@Body RequestBody requestBody);
+
+    @POST(APIFactory.ORDER)
+    Observable<HttpRespond<List<OrderBean>>> getOrder(@Body RequestBody requestBody);
+
+    @POST(APIFactory.RENEW)
+    Observable<HttpRespond<EBuyBean>> renew(@Body RequestBody requestBody);
+
+    @POST(APIFactory.BUY_SUIT)
+    Observable<HttpRespond> buySuit(@Body RequestBody requestBody);
+
+    @POST(APIFactory.RECHARGE)
+    Observable<HttpRespond> recharge(@Body RequestBody requestBody);
 }

@@ -24,22 +24,33 @@ public class CommonFragment extends BaseFragment implements AdvancedWebView.List
         return R.layout.fragment_common_web;
     }
 
+    public String getUrl() {
+        return url;
+    }
+
+    public void setUrl(String url) {
+        this.url = url;
+        if (wvDesc != null) {
+            wvDesc.loadUrl(url);
+        }
+    }
+
     @Override
     protected void initView(Bundle arguments) {
 
         //传入
-        Bundle bundle = getArguments();
-        if (bundle != null) {
-            url = bundle.getString("url");
-            if (TextUtils.isEmpty(url)) {
-                ToastUtils.showLong(getActivity(), "数据错误");
-                return;
-            }
-            LogUtils.e("url=====" + url);
-        } else {
-            ToastUtils.showLong(getActivity(), "数据错误");
-            return;
-        }
+//        Bundle bundle = getArguments();
+//        if (bundle != null) {
+//            url = bundle.getString("url");
+//            if (TextUtils.isEmpty(url)) {
+//                ToastUtils.showLong(getActivity(), "数据错误");
+//                return;
+//            }
+//            LogUtils.e("url=====" + url);
+//        } else {
+//            ToastUtils.showLong(getActivity(), "数据错误");
+//            return;
+//        }
 
 
 //        wvDesc.getSettings().setJavaScriptEnabled(true);
@@ -53,7 +64,7 @@ public class CommonFragment extends BaseFragment implements AdvancedWebView.List
 //        wvDesc.getSettings().setLoadWithOverviewMode(true);
 
         wvDesc.setListener(getActivity(), this);
-        wvDesc.loadUrl(url);
+//        wvDesc.loadUrl(url);
 
 //        wvDesc.setWebChromeClient(new WebChromeClient() {
 //

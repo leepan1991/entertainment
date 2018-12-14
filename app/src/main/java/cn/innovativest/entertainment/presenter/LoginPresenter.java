@@ -4,6 +4,7 @@ import org.json.JSONException;
 import org.json.JSONObject;
 
 import cn.innovativest.entertainment.base.BasePresent;
+import cn.innovativest.entertainment.bean.LoginBean;
 import cn.innovativest.entertainment.common.HttpRespond;
 import cn.innovativest.entertainment.rxbase.RetrofitFactory;
 import cn.innovativest.entertainment.view.LoginView;
@@ -18,18 +19,10 @@ import okhttp3.RequestBody;
 public class LoginPresenter extends BasePresent<LoginView> {
 
     public void doLogin(final String phone, final String password) {
-        JSONObject requestData = new JSONObject();
-        try {
-            // 生成私有token
-            requestData.put("phone", phone);
-            requestData.put("password", password);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), requestData.toString());
-        add(RetrofitFactory.getInstance().getApiService().login(requestBody), new Consumer<HttpRespond>() {
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), "phone=" + phone + "&password=" + password);
+        add(RetrofitFactory.getInstance().getApiService().login(requestBody), new Consumer<HttpRespond<LoginBean>>() {
             @Override
-            public void accept(HttpRespond respond) throws Exception {
+            public void accept(HttpRespond<LoginBean> respond) throws Exception {
                 view.loginSuccess(respond);
             }
         });

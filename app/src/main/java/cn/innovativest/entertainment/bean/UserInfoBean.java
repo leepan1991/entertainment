@@ -2,7 +2,7 @@ package cn.innovativest.entertainment.bean;
 
 public class UserInfoBean {
     private String head_img;
-    private long end_time;
+    private String end_time;
     private float jifen;
     private String rmb;
     private String phone;
@@ -16,11 +16,11 @@ public class UserInfoBean {
         this.head_img = head_img;
     }
 
-    public long getEnd_time() {
+    public String getEnd_time() {
         return end_time;
     }
 
-    public void setEnd_time(long end_time) {
+    public void setEnd_time(String end_time) {
         this.end_time = end_time;
     }
 
