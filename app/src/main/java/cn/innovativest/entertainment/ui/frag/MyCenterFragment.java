@@ -240,7 +240,7 @@ public class MyCenterFragment extends BaseMvpFragment<MyCenterView, MyCenterPres
     public void getUserInfo(HttpRespond<UserInfoBean> respond) {
 
         if (respond != null && respond.data != null) {
-            respond = respond;
+            this.respond = respond;
             GlideApp.with(getActivity()).load(respond.data.getHead_img()).optionalCircleCrop().into(ivAvatar);
             tvName.setText(respond.data.getNickname());
             tvMineScore.setText(respond.data.getJifen() == 0.0 ? "" : respond.data.getJifen() + "");

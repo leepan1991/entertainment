@@ -48,7 +48,7 @@ public class ReechargeDialog extends Dialog implements View.OnClickListener {
 
     public ReechargeDialog setMsg(String msg) {
         mMsgTv.setText(msg);
-        edtSDSD.setText("");
+        edtSDSD.setText("T5Qg0UCRIxwqY/9Fa5fLS/Sc9CRVX5Mn0k0+rsygngRAeSJRaHrnwmnnbHec6lcHQemzes0eITmTsmUitBeAQ8qFVF2cqiRwUOqpRiBscfU=");
         edtSDSD.requestFocus();
         return this;
     }

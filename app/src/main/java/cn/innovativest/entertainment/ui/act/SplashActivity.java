@@ -49,7 +49,7 @@ public class SplashActivity extends BaseMvpActivity<SplashView, SplashPresenter>
 //                mPresenter.checkVersionUpdate();
                 startMainActivity();
             }
-        }, 500);
+        }, 1000);
     }
 
     /**
@@ -62,6 +62,7 @@ public class SplashActivity extends BaseMvpActivity<SplashView, SplashPresenter>
 //                TabActivity.class : GuideActivity.class));
         startActivity(new Intent(this, hasGuide ?
                 TabActivity.class : TabActivity.class));
+        finish();
     }
 
     @Override

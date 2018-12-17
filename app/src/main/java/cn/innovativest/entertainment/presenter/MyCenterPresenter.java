@@ -1,5 +1,7 @@
 package cn.innovativest.entertainment.presenter;
 
+import java.net.URLEncoder;
+
 import cn.innovativest.entertainment.base.BasePresent;
 import cn.innovativest.entertainment.bean.UserInfoBean;
 import cn.innovativest.entertainment.common.HttpRespond;
@@ -31,7 +33,7 @@ public class MyCenterPresenter extends BasePresent<MyCenterView> {
     }
 
     public void recharge(String phone, String recharge) {
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), "phone=" + phone + "&recharge=" + recharge + "&type=ATH手办娱乐" + "&bid=");
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), "phone=" + phone + "&recharge=" + URLEncoder.encode(recharge) + "&type=" + URLEncoder.encode("ATH手办娱乐") + "&bid=");
         add(RetrofitFactory.getInstance().getApiService().recharge(requestBody), new Consumer<HttpRespond>() {
             @Override
             public void accept(HttpRespond respond) throws Exception {

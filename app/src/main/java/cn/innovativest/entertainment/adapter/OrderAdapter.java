@@ -62,6 +62,7 @@ public class OrderAdapter extends BaseAdapter {
         // 封装数据
         OrderBean orderBean = (OrderBean) getItem(position);
 
+        holder.tvwTitle.setText(orderBean.getTitle());
         holder.tvScore.setText(orderBean.getFee());
         holder.tvDay.setText(orderBean.getDay());
         holder.tvPayTime.setText(orderBean.getTime());
@@ -71,6 +72,8 @@ public class OrderAdapter extends BaseAdapter {
     }
 
     static class ViewHolder {
+        @BindView(R.id.tvwTitle)
+        TextView tvwTitle;
         @BindView(R.id.tvScore)
         TextView tvScore;
         @BindView(R.id.tvDay)

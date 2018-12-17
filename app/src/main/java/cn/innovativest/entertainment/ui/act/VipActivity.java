@@ -3,6 +3,7 @@ package cn.innovativest.entertainment.ui.act;
 import android.text.TextUtils;
 import android.view.View;
 import android.widget.Button;
+import android.widget.ImageButton;
 import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
@@ -22,6 +23,12 @@ import cn.innovativest.entertainment.utils.ToastUtils;
 import cn.innovativest.entertainment.view.VipView;
 
 public class VipActivity extends BaseMvpActivity<VipView, VipPresenter> implements VipView {
+
+    @BindView(R.id.btnBack)
+    ImageButton btnBack;
+
+    @BindView(R.id.tvwTitle)
+    TextView tvwTitle;
 
     @BindView(R.id.iv_avatar)
     ImageView iv_avatar;
@@ -108,11 +115,21 @@ public class VipActivity extends BaseMvpActivity<VipView, VipPresenter> implemen
         time = getIntent().getStringExtra("time");
         score = getIntent().getFloatExtra("score", 0.0f);
 
+        btnBack.setImageResource(R.mipmap.login_arrow_left);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                finish();
+            }
+        });
+
         if (TextUtils.isEmpty(time)) {
             lltNameTwo.setVisibility(View.GONE);
+            tvwTitle.setText("开通会员");
         } else {
             lltNameTwo.setVisibility(View.VISIBLE);
             tvVIPTime.setText(StringUtils.formatTimeToFormat("yyyy-MM-dd HH:mm:SS", Long.parseLong(time)) + " 到期");
+            tvwTitle.setText("会员续费");
         }
 
         tvScore.setText(score + "");
@@ -162,7 +179,7 @@ public class VipActivity extends BaseMvpActivity<VipView, VipPresenter> implemen
     @Override
     public void getVipInfo(HttpRespond<EBuyBean> respond) {
         if (respond != null && respond.data.getLstBuyBeans().size() == 2) {
-            respond = respond;
+            this.respond = respond;
             tvMonthNotice.setText(respond.data.getLstBuyBeans().get(0).getCard_title() + "会员-" + respond.data.getLstBuyBeans().get(0).getCard_day() + "天");
             tvYearNotice.setText(respond.data.getLstBuyBeans().get(1).getCard_title() + "会员-" + respond.data.getLstBuyBeans().get(0).getCard_day() + "天");
             ivMonth.setImageResource(R.mipmap.ic_share_checked);
@@ -174,6 +191,9 @@ public class VipActivity extends BaseMvpActivity<VipView, VipPresenter> implemen
 
     @Override
     public void payComplete(HttpRespond respond) {
-
+        ToastUtils.showShort(VipActivity.this, respond.message);
+        if (respond.states == 1) {
+            finish();
+        }
     }
 }

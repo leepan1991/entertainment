@@ -19,16 +19,16 @@ public class AuthPresenter extends BasePresent<AuthView> {
 
 
     public void auth(final String phone, final String password, final String password1) {
-        JSONObject requestData = new JSONObject();
-        try {
-            // 生成私有token
-            requestData.put("phone", phone);
-            requestData.put("password", password);
-            requestData.put("password1", password1);
-        } catch (JSONException e) {
-            e.printStackTrace();
-        }
-        RequestBody requestBody = RequestBody.create(MediaType.parse("application/json"), "phone=" + phone + "&password=" + password + "&password1=" + password1);
+//        JSONObject requestData = new JSONObject();
+//        try {
+//            // 生成私有token
+//            requestData.put("phone", phone);
+//            requestData.put("password", password);
+//            requestData.put("password1", password1);
+//        } catch (JSONException e) {
+//            e.printStackTrace();
+//        }
+        RequestBody requestBody = RequestBody.create(MediaType.parse("application/x-www-form-urlencoded"), "phone=" + phone + "&password=" + password + "&password1=" + password1);
         add(RetrofitFactory.getInstance().getApiService().auth(requestBody), new Consumer<HttpRespond>() {
             @Override
             public void accept(HttpRespond respond) throws Exception {
