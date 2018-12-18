@@ -1,15 +1,20 @@
 package cn.innovativest.entertainment.ui.act;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.os.Build;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import butterknife.BindView;
 import cn.innovativest.entertainment.R;
 import cn.innovativest.entertainment.base.BaseActivity;
+import cn.innovativest.entertainment.utils.SPUtils;
 import cn.innovativest.entertainment.utils.ToastUtils;
 import im.delight.android.webview.AdvancedWebView;
 
@@ -57,7 +62,30 @@ public class HtmlActivity extends BaseActivity implements AdvancedWebView.Listen
             return;
         }
         wvDesc.setListener(this, this);
+        synCookies(this);
         wvDesc.loadUrl(url);
+    }
+
+    public void synCookies(Context context) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            CookieSyncManager.createInstance(context);
+        }
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);// 允许接受 Cookie
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            cookieManager.removeSessionCookie();// 移除
+        } else {
+            cookieManager.removeSessionCookies(null);// 移除
+        }
+        if (!TextUtils.isEmpty((String) SPUtils.get(this, "user_cookie_pre", ""))) {
+            cookieManager.setCookie((String) SPUtils.get(this, "user_cookie_pre", "") + "_phone", (String) SPUtils.get(this, "user_phone", ""));
+        }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            CookieSyncManager.getInstance().sync();
+        } else {
+            cookieManager.flush();
+        }
     }
 
     @Override

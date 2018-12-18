@@ -2,7 +2,6 @@ package cn.innovativest.entertainment.ui.act;
 
 import android.content.Intent;
 import android.graphics.Color;
-import android.os.Bundle;
 import android.support.v4.app.Fragment;
 import android.text.TextUtils;
 
@@ -21,7 +20,6 @@ import cn.innovativest.entertainment.base.BaseMvpActivity;
 import cn.innovativest.entertainment.bean.TabBean;
 import cn.innovativest.entertainment.common.HttpRespond;
 import cn.innovativest.entertainment.presenter.TabPresenter;
-import cn.innovativest.entertainment.ui.frag.CommonFragment;
 import cn.innovativest.entertainment.ui.frag.GetFilmFragment;
 import cn.innovativest.entertainment.ui.frag.IndexFragment;
 import cn.innovativest.entertainment.ui.frag.MyCenterFragment;

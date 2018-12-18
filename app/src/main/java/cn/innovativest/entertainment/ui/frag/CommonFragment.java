@@ -2,19 +2,16 @@ package cn.innovativest.entertainment.ui.frag;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
-import android.net.Uri;
+import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
-import android.webkit.JavascriptInterface;
-import android.webkit.ValueCallback;
-import android.webkit.WebChromeClient;
+import android.webkit.CookieManager;
+import android.webkit.CookieSyncManager;
 
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
-import com.github.lzyzsd.jsbridge.DefaultHandler;
 import com.google.gson.Gson;
 
 import butterknife.BindView;
@@ -25,8 +22,6 @@ import cn.innovativest.entertainment.ui.act.LoginActivity;
 import cn.innovativest.entertainment.ui.act.VipActivity;
 import cn.innovativest.entertainment.utils.LogUtils;
 import cn.innovativest.entertainment.utils.SPUtils;
-import cn.innovativest.entertainment.utils.ToastUtils;
-import im.delight.android.webview.AdvancedWebView;
 
 public class CommonFragment extends BaseFragment {
 
@@ -65,6 +60,7 @@ public class CommonFragment extends BaseFragment {
         this.url = url;
         this.item_id = item_id;
         if (wvDesc != null) {
+            synCookies(getActivity());
             wvDesc.registerHandler("app_page", new BridgeHandler() {
                 @Override
                 public void handler(String data, CallBackFunction function) {
@@ -75,15 +71,25 @@ public class CommonFragment extends BaseFragment {
                             if (webJsonBean.getType().equals("login")) {
                                 Intent i = new Intent(getActivity(), LoginActivity.class);
                                 i.putExtra("item_id", getItem_id());
+                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
                                 startActivityForResult(i, LoginActivity.REQUEST_CODE);
                             } else if (webJsonBean.getType().equals("open")) {
-                                Intent i = new Intent(getActivity(), VipActivity.class);
-                                i.putExtra("item_id", getItem_id());
-                                startActivityForResult(i, LoginActivity.REQUEST_CODE);
+                                if ((boolean) SPUtils.get(getActivity(), "is_login", false)) {
+                                    Intent i = new Intent(getActivity(), VipActivity.class);
+                                    i.putExtra("item_id", getItem_id());
+                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivityForResult(i, LoginActivity.REQUEST_CODE);
+                                } else {
+                                    Intent i = new Intent(getActivity(), LoginActivity.class);
+                                    i.putExtra("item_id", getItem_id());
+                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+                                    startActivityForResult(i, LoginActivity.REQUEST_CODE);
+                                }
+
                             }
                         }
                     }
-                    function.onCallBack("submitFromWeb exe, response data 中文 from Java");
+//                    function.onCallBack("submitFromWeb exe, response data 中文 from Java");
                 }
             });
             wvDesc.loadUrl(url);
@@ -177,6 +183,9 @@ public class CommonFragment extends BaseFragment {
         wvDesc.onPause();
         // ...
         super.onPause();
+//        CookieManager cookieManager = CookieManager.getInstance();
+//        String cookieStr = cookieManager.getCookie(getDomain(url));
+//        SPUtils.put(getActivity(), "cookie", cookieStr);
     }
 
 //    public class JavaScriptInterface {
@@ -201,5 +210,55 @@ public class CommonFragment extends BaseFragment {
             super(webView);
         }
     }
+
+    public void synCookies(Context context) {
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            CookieSyncManager.createInstance(context);
+        }
+        CookieManager cookieManager = CookieManager.getInstance();
+        cookieManager.setAcceptCookie(true);// 允许接受 Cookie
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            cookieManager.removeSessionCookie();// 移除
+        } else {
+            cookieManager.removeSessionCookies(null);// 移除
+        }
+        if (!TextUtils.isEmpty((String) SPUtils.get(getActivity(), "user_cookie_pre", ""))) {
+            cookieManager.setCookie((String) SPUtils.get(getActivity(), "user_cookie_pre", "") + "_phone", (String) SPUtils.get(getActivity(), "user_phone", ""));
+        }
+
+        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
+            CookieSyncManager.getInstance().sync();
+        } else {
+            cookieManager.flush();
+        }
+    }
+
+//    public void setCookies(String cookiesPath) {
+//        Map<String, String> cookieMap = new HashMap<>();
+//        String cookie = (String) SPUtils.get(getActivity(), "cookie", "");
+//        if (!TextUtils.isEmpty(cookie)) {
+//            String[] cookieArray = cookie.split(";");// 多个Cookie是使用分号分隔的
+//            for (int i = 0; i < cookieArray.length; i++) {
+//                int position = cookieArray[i].indexOf("=");// 在Cookie中键值使用等号分隔
+//                String cookieName = cookieArray[i].substring(0, position);// 获取键
+//                String cookieValue = cookieArray[i].substring(position + 1);// 获取值
+//
+//                String value = cookieName + "=" + cookieValue;// 键值对拼接成 value
+//                Log.i("cookie", value);
+//                CookieManager.getInstance().setCookie(getDomain(cookiesPath), value);// 设置 Cookie
+//            }
+//        }
+//    }
+//
+//    /**
+//     * 获取URL的域名
+//     */
+//    private String getDomain(String url) {
+//        url = url.replace("http://", "").replace("https://", "");
+//        if (url.contains("/")) {
+//            url = url.substring(0, url.indexOf('/'));
+//        }
+//        return url;
+//    }
 
 }
