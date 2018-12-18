@@ -106,6 +106,7 @@ dependencies {
     implementation 'com.umeng.sdk:common:1.5.3'
     implementation 'com.umeng.analytics:analytics:6.1.4'
     implementation 'com.github.delight-im:Android-AdvancedWebView:v3.0.0'
+    implementation 'com.github.lzyzsd:jsbridge:1.0.4'
     //PushSDK必须依赖基础组件库，所以需要加入对应依赖
     implementation 'com.umeng.sdk:common:1.5.3'
     //PushSDK必须依赖utdid所以需要加入对应依赖

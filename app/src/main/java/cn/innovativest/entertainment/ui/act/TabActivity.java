@@ -149,7 +149,9 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
 //                bundle.putString("url", respond.data.getSoupian());
 //                searchFilmFragment.setArguments(bundle);
 //                mFragments.add(searchFilmFragment);
-                searchFilmFragment.setUrl(respond.data.getSoupian());
+                searchFilmFragment.setUrlAndId(respond.data.getSoupian(),0);
+//                searchFilmFragment.setUrl(respond.data.getSoupian());
+//                searchFilmFragment.setItem_id(0);
             }
             if (!TextUtils.isEmpty(respond.data.getDianshi())) {
 //                TvFragment tvFragment = new TvFragment();
@@ -157,7 +159,9 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
 //                bundle.putString("url", respond.data.getDianshi());
 //                tvFragment.setArguments(bundle);
 //                mFragments.add(tvFragment);
-                tvFragment.setUrl(respond.data.getDianshi());
+                tvFragment.setUrlAndId(respond.data.getDianshi(),1);
+//                tvFragment.setUrl(respond.data.getDianshi());
+//                tvFragment.setItem_id(1);
             }
             if (!TextUtils.isEmpty(respond.data.getShouye())) {
 //                IndexFragment indexFragment = new IndexFragment();
@@ -165,7 +169,9 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
 //                bundle.putString("url", respond.data.getShouye());
 //                indexFragment.setArguments(bundle);
 //                mFragments.add(indexFragment);
-                indexFragment.setUrl(respond.data.getShouye());
+                indexFragment.setUrlAndId(respond.data.getShouye(),2);
+//                indexFragment.setUrl(respond.data.getShouye());
+//                indexFragment.setItem_id(2);
             }
             if (!TextUtils.isEmpty(respond.data.getQiupian())) {
 //                GetFilmFragment getFilmFragment = new GetFilmFragment();
@@ -173,7 +179,9 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
 //                bundle.putString("url", respond.data.getQiupian());
 //                getFilmFragment.setArguments(bundle);
 //                mFragments.add(getFilmFragment);
-                getFilmFragment.setUrl(respond.data.getQiupian());
+                getFilmFragment.setUrlAndId(respond.data.getQiupian(),3);
+//                getFilmFragment.setUrl(respond.data.getQiupian());
+//                getFilmFragment.setItem_id(3);
             }
 
 //            mFragments.add(new MyCenterFragment());

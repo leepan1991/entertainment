@@ -5,7 +5,9 @@
     android:background="@android:color/white"
     android:descendantFocusability="blocksDescendants"
     android:orientation="vertical">
+
     <include layout="@layout/view_actionbar_menu" />
+
     <ScrollView
         android:layout_width="match_parent"
         android:layout_height="match_parent"
@@ -309,45 +311,55 @@
                     android:scaleType="fitXY"
                     android:src="@mipmap/tequan" />
 
-                <TextView
-                    android:layout_width="wrap_content"
+                <WebView
+                    android:id="@+id/wvDesc"
+                    android:layout_width="match_parent"
                     android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_gravity="left"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
                     android:layout_marginLeft="15dp"
                     android:layout_marginTop="15dp"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:text="会员开通："
-                    android:textColor="@color/color_gray_3"
-                    android:textSize="16sp" />
+                    android:layout_marginRight="15dp"></WebView>
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:text="1.直接续费"
-                    android:textColor="@color/color_gray_3"
-                    android:textSize="16sp" />
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_gravity="left"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_marginTop="15dp"-->
+                <!--android:gravity="center"-->
+                <!--android:maxLines="1"-->
+                <!--android:text="会员开通："-->
+                <!--android:textColor="@color/color_gray_3"-->
+                <!--android:textSize="16sp" />-->
 
-                <TextView
-                    android:layout_width="wrap_content"
-                    android:layout_height="wrap_content"
-                    android:layout_alignParentLeft="true"
-                    android:layout_gravity="left"
-                    android:layout_marginLeft="15dp"
-                    android:layout_marginTop="5dp"
-                    android:layout_marginBottom="20dp"
-                    android:gravity="center"
-                    android:maxLines="1"
-                    android:text="2.通过兑换码激活码来开通"
-                    android:textColor="@color/color_gray_3"
-                    android:textSize="16sp" />
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_gravity="left"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:gravity="center"-->
+                <!--android:maxLines="1"-->
+                <!--android:text="1.直接续费"-->
+                <!--android:textColor="@color/color_gray_3"-->
+                <!--android:textSize="16sp" />-->
+
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_gravity="left"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:layout_marginBottom="20dp"-->
+                <!--android:gravity="center"-->
+                <!--android:maxLines="1"-->
+                <!--android:text="2.通过兑换码激活码来开通"-->
+                <!--android:textColor="@color/color_gray_3"-->
+                <!--android:textSize="16sp" />-->
             </LinearLayout>
         </LinearLayout>
     </ScrollView>

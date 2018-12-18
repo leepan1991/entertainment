@@ -1,7 +1,9 @@
 package cn.innovativest.entertainment.ui.act;
 
+import android.content.Intent;
 import android.text.TextUtils;
 import android.view.View;
+import android.webkit.WebView;
 import android.widget.Button;
 import android.widget.ImageButton;
 import android.widget.ImageView;
@@ -15,6 +17,7 @@ import cn.innovativest.entertainment.GlideApp;
 import cn.innovativest.entertainment.R;
 import cn.innovativest.entertainment.base.BaseMvpActivity;
 import cn.innovativest.entertainment.bean.EBuyBean;
+import cn.innovativest.entertainment.bean.UserInfoBean;
 import cn.innovativest.entertainment.common.HttpRespond;
 import cn.innovativest.entertainment.presenter.VipPresenter;
 import cn.innovativest.entertainment.utils.SPUtils;
@@ -75,12 +78,17 @@ public class VipActivity extends BaseMvpActivity<VipView, VipPresenter> implemen
     @BindView(R.id.btnScore)
     Button btnScore;
 
+    @BindView(R.id.wvDesc)
+    WebView wvDesc;
+
     HttpRespond<EBuyBean> respond = null;
 
     private String name;
     private String headImg;
     private String time;
     private float score;
+
+    private int item_id;
 
     private String cardDay;
     private String cardCredit;
@@ -110,35 +118,25 @@ public class VipActivity extends BaseMvpActivity<VipView, VipPresenter> implemen
     @Override
     public void initView() {
 
-        name = getIntent().getStringExtra("name");
-        headImg = getIntent().getStringExtra("headImg");
-        time = getIntent().getStringExtra("time");
-        score = getIntent().getFloatExtra("score", 0.0f);
 
         btnBack.setImageResource(R.mipmap.login_arrow_left);
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
-                finish();
+                if (item_id != -1) {
+                    Intent intent = new Intent();
+                    intent.putExtra("item_id", item_id);
+                    intent.putExtra(LoginActivity.IS_LOGINED, true);
+                    setResult(LoginActivity.RESULT_CODE, intent);
+                    finish();
+                } else {
+                    finish();
+                }
             }
         });
 
-        if (TextUtils.isEmpty(time)) {
-            lltNameTwo.setVisibility(View.GONE);
-            tvwTitle.setText("开通会员");
-        } else {
-            lltNameTwo.setVisibility(View.VISIBLE);
-            tvVIPTime.setText(StringUtils.formatTimeToFormat("yyyy-MM-dd HH:mm:SS", Long.parseLong(time)) + " 到期");
-            tvwTitle.setText("会员续费");
-        }
+        item_id = getIntent().getIntExtra("item_id", -1);
 
-        tvScore.setText(score + "");
-
-        tvName.setText(name);
-        GlideApp.with(this).load(headImg).optionalCircleCrop().into(iv_avatar);
-
-        ivMonth.setImageResource(R.mipmap.ic_share_checked);
-        ivYear.setImageResource(R.mipmap.ic_share_check);
         mPresenter.getVipInfo((String) SPUtils.get(this, "user_phone", ""));
     }
 
@@ -176,15 +174,42 @@ public class VipActivity extends BaseMvpActivity<VipView, VipPresenter> implemen
         mPresenter.buySuit((String) SPUtils.get(this, "user_phone", ""), "1", cardDay, cardCredit);
     }
 
+    private void init(UserInfoBean userInfoBean) {
+        name = userInfoBean.getNickname();
+        headImg = userInfoBean.getHead_img();
+        time = userInfoBean.getEnd_time();
+        score = userInfoBean.getJifen();
+        if (TextUtils.isEmpty(time)) {
+            lltNameTwo.setVisibility(View.GONE);
+            tvwTitle.setText("开通会员");
+        } else {
+            lltNameTwo.setVisibility(View.VISIBLE);
+            tvVIPTime.setText(StringUtils.formatTimeToFormat("yyyy-MM-dd HH:mm:SS", Long.parseLong(time)) + " 到期");
+            tvwTitle.setText("会员续费");
+        }
+
+        tvScore.setText(score + "");
+
+        tvName.setText(name);
+        GlideApp.with(this).load(headImg).optionalCircleCrop().into(iv_avatar);
+
+        ivMonth.setImageResource(R.mipmap.ic_share_checked);
+        ivYear.setImageResource(R.mipmap.ic_share_check);
+    }
+
     @Override
     public void getVipInfo(HttpRespond<EBuyBean> respond) {
-        if (respond != null && respond.data.getLstBuyBeans().size() == 2) {
+        if (respond != null && respond.data != null && respond.data.getLstBuyBeans().size() == 2) {
             this.respond = respond;
             tvMonthNotice.setText(respond.data.getLstBuyBeans().get(0).getCard_title() + "会员-" + respond.data.getLstBuyBeans().get(0).getCard_day() + "天");
             tvYearNotice.setText(respond.data.getLstBuyBeans().get(1).getCard_title() + "会员-" + respond.data.getLstBuyBeans().get(0).getCard_day() + "天");
             ivMonth.setImageResource(R.mipmap.ic_share_checked);
             ivYear.setImageResource(R.mipmap.ic_share_check);
             tvwMoneyDesc.setText("支付金额：" + respond.data.getLstBuyBeans().get(0).getCard_fee() + "元 或 " + respond.data.getLstBuyBeans().get(0).getCard_credit() + "积分");
+            wvDesc.loadData(respond.data.getText(), "text/html; charset=UTF-8", null);
+        }
+        if (respond != null && respond.data != null && respond.data.getUserInfoBean() != null) {
+            init(respond.data.getUserInfoBean());
         }
 
     }
@@ -193,7 +218,15 @@ public class VipActivity extends BaseMvpActivity<VipView, VipPresenter> implemen
     public void payComplete(HttpRespond respond) {
         ToastUtils.showShort(VipActivity.this, respond.message);
         if (respond.states == 1) {
-            finish();
+            if (item_id != -1) {
+                Intent intent = new Intent();
+                intent.putExtra("item_id", item_id);
+                intent.putExtra(LoginActivity.IS_LOGINED, true);
+                setResult(LoginActivity.RESULT_CODE, intent);
+                finish();
+            } else {
+                finish();
+            }
         }
     }
 }

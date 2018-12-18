@@ -78,6 +78,7 @@
         <activity
             android:name=".ui.act.VipActivity"
             android:screenOrientation="portrait"
+            android:launchMode="singleTask"
             android:windowSoftInputMode="stateUnchanged|adjustResize" />
 
         <provider

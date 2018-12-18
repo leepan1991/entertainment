@@ -1,23 +1,49 @@
 package cn.innovativest.entertainment.ui.frag;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
+import android.net.Uri;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.webkit.JavascriptInterface;
+import android.webkit.ValueCallback;
+import android.webkit.WebChromeClient;
+
+import com.github.lzyzsd.jsbridge.BridgeHandler;
+import com.github.lzyzsd.jsbridge.BridgeWebView;
+import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
+import com.github.lzyzsd.jsbridge.CallBackFunction;
+import com.github.lzyzsd.jsbridge.DefaultHandler;
+import com.google.gson.Gson;
 
 import butterknife.BindView;
 import cn.innovativest.entertainment.R;
 import cn.innovativest.entertainment.base.BaseFragment;
+import cn.innovativest.entertainment.bean.WebJsonBean;
+import cn.innovativest.entertainment.ui.act.LoginActivity;
+import cn.innovativest.entertainment.ui.act.VipActivity;
 import cn.innovativest.entertainment.utils.LogUtils;
+import cn.innovativest.entertainment.utils.SPUtils;
 import cn.innovativest.entertainment.utils.ToastUtils;
 import im.delight.android.webview.AdvancedWebView;
 
-public class CommonFragment extends BaseFragment implements AdvancedWebView.Listener {
+public class CommonFragment extends BaseFragment {
 
     @BindView(R.id.wvDesc)
-    AdvancedWebView wvDesc;
+    BridgeWebView wvDesc;
 
     String url;
+
+    private int item_id = 0;
+
+    public int getItem_id() {
+        return item_id;
+    }
+
+    public void setItem_id(int item_id) {
+        this.item_id = item_id;
+    }
 
     @Override
     protected int getLayoutId() {
@@ -31,6 +57,35 @@ public class CommonFragment extends BaseFragment implements AdvancedWebView.List
     public void setUrl(String url) {
         this.url = url;
         if (wvDesc != null) {
+            wvDesc.loadUrl(url);
+        }
+    }
+
+    public void setUrlAndId(String url, int item_id) {
+        this.url = url;
+        this.item_id = item_id;
+        if (wvDesc != null) {
+            wvDesc.registerHandler("app_page", new BridgeHandler() {
+                @Override
+                public void handler(String data, CallBackFunction function) {
+                    LogUtils.e("data from web = " + data);
+                    if (!TextUtils.isEmpty(data)) {
+                        WebJsonBean webJsonBean = new Gson().fromJson(data, WebJsonBean.class);
+                        if (webJsonBean != null) {
+                            if (webJsonBean.getType().equals("login")) {
+                                Intent i = new Intent(getActivity(), LoginActivity.class);
+                                i.putExtra("item_id", getItem_id());
+                                startActivityForResult(i, LoginActivity.REQUEST_CODE);
+                            } else if (webJsonBean.getType().equals("open")) {
+                                Intent i = new Intent(getActivity(), VipActivity.class);
+                                i.putExtra("item_id", getItem_id());
+                                startActivityForResult(i, LoginActivity.REQUEST_CODE);
+                            }
+                        }
+                    }
+                    function.onCallBack("submitFromWeb exe, response data 中文 from Java");
+                }
+            });
             wvDesc.loadUrl(url);
         }
     }
@@ -53,8 +108,13 @@ public class CommonFragment extends BaseFragment implements AdvancedWebView.List
 //        }
 
 
-//        wvDesc.getSettings().setJavaScriptEnabled(true);
-//        wvDesc.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        wvDesc.getSettings().setJavaScriptEnabled(true);
+        wvDesc.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+//        wvDesc.setDefaultHandler(new DefaultHandler());
+
+
+        wvDesc.setWebViewClient(new MyWebViewClient(wvDesc));
+
 //        wvDesc.getSettings().setSupportZoom(true);
 //        wvDesc.getSettings().setLoadWithOverviewMode(true);
 //        wvDesc.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
@@ -63,7 +123,7 @@ public class CommonFragment extends BaseFragment implements AdvancedWebView.List
 //        wvDesc.getSettings().setUseWideViewPort(true);
 //        wvDesc.getSettings().setLoadWithOverviewMode(true);
 
-        wvDesc.setListener(getActivity(), this);
+//        wvDesc.setListener(getActivity(), this);
 //        wvDesc.loadUrl(url);
 
 //        wvDesc.setWebChromeClient(new WebChromeClient() {
@@ -119,42 +179,27 @@ public class CommonFragment extends BaseFragment implements AdvancedWebView.List
         super.onPause();
     }
 
-    @Override
-    public void onDestroy() {
-        wvDesc.onDestroy();
-        // ...
-        super.onDestroy();
+//    public class JavaScriptInterface {
+//        Context mContext;
+//
+//        JavaScriptInterface(Context c) {
+//            mContext = c;
+//        }
+//
+//        @JavascriptInterface
+//        public void changeActivity() {
+//            Intent i = new Intent(getActivity(), LoginActivity.class);
+//            i.putExtra("item_id", getItem_id());
+//            startActivityForResult(i, LoginActivity.REQUEST_CODE);
+////            startActivity(i);
+//        }
+//    }
+
+    class MyWebViewClient extends BridgeWebViewClient {
+
+        public MyWebViewClient(BridgeWebView webView) {
+            super(webView);
+        }
     }
 
-    @Override
-    public void onActivityResult(int requestCode, int resultCode, Intent intent) {
-        super.onActivityResult(requestCode, resultCode, intent);
-        wvDesc.onActivityResult(requestCode, resultCode, intent);
-        // ...
-    }
-
-    @Override
-    public void onPageStarted(String url, Bitmap favicon) {
-
-    }
-
-    @Override
-    public void onPageFinished(String url) {
-
-    }
-
-    @Override
-    public void onPageError(int errorCode, String description, String failingUrl) {
-
-    }
-
-    @Override
-    public void onDownloadRequested(String url, String suggestedFilename, String mimeType, long contentLength, String contentDisposition, String userAgent) {
-
-    }
-
-    @Override
-    public void onExternalPageRequest(String url) {
-
-    }
 }

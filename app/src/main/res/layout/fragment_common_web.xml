@@ -21,14 +21,14 @@
             android:layout_gravity="center_horizontal"
             android:orientation="vertical">
 
-            <im.delight.android.webview.AdvancedWebView
+            <com.github.lzyzsd.jsbridge.BridgeWebView
                 android:id="@+id/wvDesc"
                 android:layout_width="match_parent"
                 android:layout_height="match_parent"
                 android:layout_below="@+id/lltContent"
                 android:layout_centerHorizontal="true"
                 android:layout_gravity="center_horizontal"
-                tools:ignore="WebViewLayout"></im.delight.android.webview.AdvancedWebView>
+                tools:ignore="WebViewLayout"></com.github.lzyzsd.jsbridge.BridgeWebView>
 
 
         </LinearLayout>

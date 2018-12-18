@@ -140,8 +140,9 @@ public class MyCenterFragment extends BaseMvpFragment<MyCenterView, MyCenterPres
     public void goToRenew() {
         if ((boolean) SPUtils.get(getActivity(), "is_login", false)) {
             if (respond != null) {
-                startActivity(new Intent(getActivity(), VipActivity.class).putExtra("name", respond.data.getNickname()).putExtra("headImg", respond.data.getHead_img()
-                ).putExtra("time", respond.data.getEnd_time()).putExtra("score", respond.data.getJifen()));
+//                startActivity(new Intent(getActivity(), VipActivity.class).putExtra("name", respond.data.getNickname()).putExtra("headImg", respond.data.getHead_img()
+//                ).putExtra("time", respond.data.getEnd_time()).putExtra("score", respond.data.getJifen()));
+                startActivity(new Intent(getActivity(), VipActivity.class));
             } else {
                 ToastUtils.showShort(getActivity(), "数据错误");
             }

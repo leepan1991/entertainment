@@ -27,7 +27,7 @@
                 android:layout_gravity="center_vertical"
                 android:layout_marginLeft="20dp"
                 android:scaleType="fitXY"
-                android:src="@mipmap/icon_geren_12" />
+                android:src="@mipmap/icon_zjongxin_07" />
 
             <TextView
                 android:id="@+id/tvwRecordName"
