@@ -23,6 +23,8 @@ import cn.innovativest.entertainment.base.BaseMvpFragment;
 import cn.innovativest.entertainment.bean.UserInfoBean;
 import cn.innovativest.entertainment.common.HttpRespond;
 import cn.innovativest.entertainment.presenter.MyCenterPresenter;
+import cn.innovativest.entertainment.ui.act.AppActivity;
+import cn.innovativest.entertainment.ui.act.HtmlActivity;
 import cn.innovativest.entertainment.ui.act.LoginActivity;
 import cn.innovativest.entertainment.ui.act.OrderActivity;
 import cn.innovativest.entertainment.ui.act.RecordActivity;
@@ -64,6 +66,9 @@ public class MyCenterFragment extends BaseMvpFragment<MyCenterView, MyCenterPres
 
     @BindView(R.id.tvMineScore)
     TextView tvMineScore;
+
+    @BindView(R.id.tvMineRMB)
+    TextView tvMineRMB;
 
     @BindView(R.id.rltMineCollect)
     RelativeLayout rltMineCollect;
@@ -113,6 +118,7 @@ public class MyCenterFragment extends BaseMvpFragment<MyCenterView, MyCenterPres
             tvName.setText("点击登录");
             GlideApp.with(getActivity()).load(R.mipmap.mine_avatar).optionalCircleCrop().into(ivAvatar);
             tvMineScore.setText("");
+            tvMineRMB.setText("");
             tvMinePhone.setText("");
             tvMineVIP.setText("");
             tvName.setOnClickListener(new View.OnClickListener() {
@@ -237,6 +243,17 @@ public class MyCenterFragment extends BaseMvpFragment<MyCenterView, MyCenterPres
         }
     }
 
+
+    @OnClick(R.id.rltRechargeNotice)
+    public void goToRechargeNotice() {
+        startActivity(new Intent(getActivity(), HtmlActivity.class).putExtra("url", "http://ath.pub/home/index/aboutATH"));
+    }
+
+    @OnClick(R.id.rltApp)
+    public void goToApp() {
+        startActivity(new Intent(getActivity(), AppActivity.class));
+    }
+
     @Override
     public void getUserInfo(HttpRespond<UserInfoBean> respond) {
 
@@ -245,6 +262,7 @@ public class MyCenterFragment extends BaseMvpFragment<MyCenterView, MyCenterPres
             GlideApp.with(getActivity()).load(respond.data.getHead_img()).optionalCircleCrop().into(ivAvatar);
             tvName.setText(respond.data.getNickname());
             tvMineScore.setText(respond.data.getJifen() == 0.0 ? "" : respond.data.getJifen() + "");
+            tvMineRMB.setText(respond.data.getRmb());
             tvMinePhone.setText(respond.data.getPhone());
             if (TextUtils.isEmpty(respond.data.getEnd_time())) {
                 rltMineVIP.setVisibility(View.GONE);

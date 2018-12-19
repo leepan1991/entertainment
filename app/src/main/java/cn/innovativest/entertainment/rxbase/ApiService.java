@@ -2,6 +2,7 @@ package cn.innovativest.entertainment.rxbase;
 
 import java.util.List;
 
+import cn.innovativest.entertainment.bean.AppBean;
 import cn.innovativest.entertainment.bean.EBuyBean;
 import cn.innovativest.entertainment.bean.LoginBean;
 import cn.innovativest.entertainment.bean.OrderBean;
@@ -51,4 +52,7 @@ public interface ApiService {
 
     @POST(APIFactory.RECHARGE)
     Observable<HttpRespond> recharge(@Body RequestBody requestBody);
+
+    @POST(APIFactory.APP)
+    Observable<HttpRespond<List<AppBean>>> getAppList(@Body RequestBody requestBody);
 }

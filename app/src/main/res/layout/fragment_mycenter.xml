@@ -236,6 +236,66 @@
                 </RelativeLayout>
 
                 <RelativeLayout
+                    android:id="@+id/rltMineRMB"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@android:color/white">
+
+                    <LinearLayout
+                        android:id="@+id/lltMineRMB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:orientation="horizontal">
+
+                        <ImageView
+                            android:layout_width="25dp"
+                            android:layout_height="25dp"
+                            android:layout_gravity="center_vertical"
+                            android:layout_marginLeft="20dp"
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/ic_balance" />
+
+                        <TextView
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_gravity="center_vertical"
+                            android:maxLines="1"
+                            android:paddingLeft="10dp"
+                            android:text="我的余额"
+                            android:textColor="#808080"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                    <TextView
+                        android:id="@+id/tvMineRMB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="5dp"
+                        android:layout_toLeftOf="@id/ivRightMineRMB"
+                        android:layout_toRightOf="@+id/lltMineRMB"
+                        android:gravity="right|center_vertical"
+                        android:maxLines="1"
+                        android:paddingLeft="10dp"
+                        android:text="ddd"
+                        android:textColor="#808080"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/ivRightMineRMB"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="20dp"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/mine_right_arrow"
+                        android:visibility="invisible" />
+                </RelativeLayout>
+
+                <RelativeLayout
                     android:id="@+id/rltMineScore"
                     android:layout_width="match_parent"
                     android:layout_height="50dp"
@@ -476,6 +536,83 @@
                         android:src="@mipmap/mine_right_arrow" />
                 </RelativeLayout>
 
+                <RelativeLayout
+                    android:id="@+id/rltRechargeNotice"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@android:color/white">
+
+                    <ImageView
+                        android:id="@+id/ivRechargeNotice"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/ic_about_ath" />
+
+                    <TextView
+                        android:id="@+id/tvRechargeNotice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/ivRechargeNotice"
+                        android:maxLines="1"
+                        android:paddingLeft="10dp"
+                        android:text="ATH充值须知"
+                        android:textColor="#808080"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/ivRightRechargeNotice"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="20dp"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/mine_right_arrow" />
+                </RelativeLayout>
+
+                <RelativeLayout
+                    android:id="@+id/rltApp"
+                    android:layout_width="match_parent"
+                    android:layout_height="50dp"
+                    android:background="@android:color/white">
+
+                    <ImageView
+                        android:id="@+id/ivApp"
+                        android:layout_width="25dp"
+                        android:layout_height="25dp"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginLeft="20dp"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/ic_app" />
+
+                    <TextView
+                        android:id="@+id/tvApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_centerVertical="true"
+                        android:layout_toRightOf="@id/ivApp"
+                        android:maxLines="1"
+                        android:paddingLeft="10dp"
+                        android:text="生态圈应用"
+                        android:textColor="#808080"
+                        android:textSize="14sp" />
+
+                    <ImageView
+                        android:id="@+id/ivRightApp"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_alignParentRight="true"
+                        android:layout_centerVertical="true"
+                        android:layout_marginRight="20dp"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/mine_right_arrow" />
+                </RelativeLayout>
 
             </LinearLayout>
 
