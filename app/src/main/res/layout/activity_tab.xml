@@ -20,9 +20,9 @@
     <com.jpeng.jptabbar.JPTabBar
         android:id="@+id/tb_main"
         android:layout_width="match_parent"
-        android:layout_height="56dp"
+        android:layout_height="60dp"
         android:background="#fff"
-        jp:TabNormalColor="#a0a0a0"
-        jp:TabSelectColor="#f00"
+        jp:TabNormalColor="#8a8a8a"
+        jp:TabSelectColor="#1afa29"
         jp:TabTextSize="12sp" />
 </LinearLayout>

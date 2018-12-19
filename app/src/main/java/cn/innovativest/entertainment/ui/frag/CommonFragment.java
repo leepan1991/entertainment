@@ -5,8 +5,13 @@ import android.content.Intent;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
+import android.util.Log;
+import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
+import android.webkit.WebBackForwardList;
+import android.widget.ImageButton;
+import android.widget.TextView;
 
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
@@ -24,6 +29,12 @@ import cn.innovativest.entertainment.utils.LogUtils;
 import cn.innovativest.entertainment.utils.SPUtils;
 
 public class CommonFragment extends BaseFragment {
+
+    @BindView(R.id.btnBack)
+    ImageButton btnBack;
+
+    @BindView(R.id.tvwTitle)
+    TextView tvwTitle;
 
     @BindView(R.id.wvDesc)
     BridgeWebView wvDesc;
@@ -60,7 +71,8 @@ public class CommonFragment extends BaseFragment {
         this.url = url;
         this.item_id = item_id;
         if (wvDesc != null) {
-            synCookies(getActivity());
+//            synCookies(getActivity());
+            setCookies(url);
             wvDesc.registerHandler("app_page", new BridgeHandler() {
                 @Override
                 public void handler(String data, CallBackFunction function) {
@@ -96,6 +108,14 @@ public class CommonFragment extends BaseFragment {
         }
     }
 
+    private boolean back() {
+        if (wvDesc.canGoBack()) {
+            wvDesc.goBack();
+            return true;
+        }
+        return false;
+    }
+
     @Override
     protected void initView(Bundle arguments) {
 
@@ -112,7 +132,14 @@ public class CommonFragment extends BaseFragment {
 //            ToastUtils.showLong(getActivity(), "数据错误");
 //            return;
 //        }
-
+        btnBack.setImageResource(R.mipmap.login_arrow_left);
+        tvwTitle.setVisibility(View.VISIBLE);
+        btnBack.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View view) {
+                back();
+            }
+        });
 
         wvDesc.getSettings().setJavaScriptEnabled(true);
         wvDesc.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
@@ -233,7 +260,7 @@ public class CommonFragment extends BaseFragment {
         }
     }
 
-//    public void setCookies(String cookiesPath) {
+    public void setCookies(String cookiesPath) {
 //        Map<String, String> cookieMap = new HashMap<>();
 //        String cookie = (String) SPUtils.get(getActivity(), "cookie", "");
 //        if (!TextUtils.isEmpty(cookie)) {
@@ -242,23 +269,28 @@ public class CommonFragment extends BaseFragment {
 //                int position = cookieArray[i].indexOf("=");// 在Cookie中键值使用等号分隔
 //                String cookieName = cookieArray[i].substring(0, position);// 获取键
 //                String cookieValue = cookieArray[i].substring(position + 1);// 获取值
-//
+
 //                String value = cookieName + "=" + cookieValue;// 键值对拼接成 value
-//                Log.i("cookie", value);
-//                CookieManager.getInstance().setCookie(getDomain(cookiesPath), value);// 设置 Cookie
+
+        if (!TextUtils.isEmpty((String) SPUtils.get(getActivity(), "user_cookie_pre", ""))) {
+            String value = (String) SPUtils.get(getActivity(), "user_cookie_pre", "") + "phone" + "=" + (String) SPUtils.get(getActivity(), "user_phone", "");// 键值对拼接成 value
+            Log.e("cookie", value);
+            CookieManager.getInstance().setCookie(getDomain(cookiesPath), value);// 设置 Cookie
+        }
+
 //            }
 //        }
-//    }
-//
-//    /**
-//     * 获取URL的域名
-//     */
-//    private String getDomain(String url) {
-//        url = url.replace("http://", "").replace("https://", "");
-//        if (url.contains("/")) {
-//            url = url.substring(0, url.indexOf('/'));
-//        }
-//        return url;
-//    }
+    }
+
+    /**
+     * 获取URL的域名
+     */
+    private String getDomain(String url) {
+        url = url.replace("http://", "").replace("https://", "");
+        if (url.contains("/")) {
+            url = url.substring(0, url.indexOf('/'));
+        }
+        return url;
+    }
 
 }

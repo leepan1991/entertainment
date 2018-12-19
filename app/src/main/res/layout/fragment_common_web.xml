@@ -6,6 +6,8 @@
     android:background="@android:color/white"
     android:orientation="vertical">
 
+    <include layout="@layout/view_actionbar_menu_back" />
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"

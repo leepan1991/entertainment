@@ -46,10 +46,10 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
     @Titles
     private static final String[] tabNames = {"搜片", "电视", "推荐", "求片", "我的"};
     @NorIcons
-    private static final int[] normalTabRes = {R.mipmap.ic_home_normal, R.mipmap.ic_alarm_normal, R.mipmap.ic_alarm_normal,
+    private static final int[] normalTabRes = {R.mipmap.ic_home_normal, R.mipmap.ic_alarm_normal, R.mipmap.ic_recom_normal,
             R.mipmap.ic_gift_normal, R.mipmap.ic_mine_normal};
     @SeleIcons
-    private static final int[] selectedTabRes = {R.mipmap.ic_home_selected, R.mipmap.ic_alarm_selected, R.mipmap.ic_alarm_selected,
+    private static final int[] selectedTabRes = {R.mipmap.ic_home_selected, R.mipmap.ic_alarm_selected, R.mipmap.ic_recom_selected,
             R.mipmap.ic_gift_selected, R.mipmap.ic_mine_selected};
     private List<Fragment> mFragments;
 
@@ -147,7 +147,7 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
 //                bundle.putString("url", respond.data.getSoupian());
 //                searchFilmFragment.setArguments(bundle);
 //                mFragments.add(searchFilmFragment);
-                searchFilmFragment.setUrlAndId(respond.data.getSoupian(),0);
+                searchFilmFragment.setUrlAndId(respond.data.getSoupian(), 0);
 //                searchFilmFragment.setUrl(respond.data.getSoupian());
 //                searchFilmFragment.setItem_id(0);
             }
@@ -157,7 +157,7 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
 //                bundle.putString("url", respond.data.getDianshi());
 //                tvFragment.setArguments(bundle);
 //                mFragments.add(tvFragment);
-                tvFragment.setUrlAndId(respond.data.getDianshi(),1);
+                tvFragment.setUrlAndId(respond.data.getDianshi(), 1);
 //                tvFragment.setUrl(respond.data.getDianshi());
 //                tvFragment.setItem_id(1);
             }
@@ -167,7 +167,7 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
 //                bundle.putString("url", respond.data.getShouye());
 //                indexFragment.setArguments(bundle);
 //                mFragments.add(indexFragment);
-                indexFragment.setUrlAndId(respond.data.getShouye(),2);
+                indexFragment.setUrlAndId(respond.data.getShouye(), 2);
 //                indexFragment.setUrl(respond.data.getShouye());
 //                indexFragment.setItem_id(2);
             }
@@ -177,7 +177,7 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
 //                bundle.putString("url", respond.data.getQiupian());
 //                getFilmFragment.setArguments(bundle);
 //                mFragments.add(getFilmFragment);
-                getFilmFragment.setUrlAndId(respond.data.getQiupian(),3);
+                getFilmFragment.setUrlAndId(respond.data.getQiupian(), 3);
 //                getFilmFragment.setUrl(respond.data.getQiupian());
 //                getFilmFragment.setItem_id(3);
             }

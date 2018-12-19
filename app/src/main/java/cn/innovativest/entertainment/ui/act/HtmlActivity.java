@@ -1,13 +1,11 @@
 package cn.innovativest.entertainment.ui.act;
 
-import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
-import android.os.Build;
 import android.text.TextUtils;
+import android.util.Log;
 import android.view.View;
 import android.webkit.CookieManager;
-import android.webkit.CookieSyncManager;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -62,30 +60,41 @@ public class HtmlActivity extends BaseActivity implements AdvancedWebView.Listen
             return;
         }
         wvDesc.setListener(this, this);
-        synCookies(this);
+        setCookies(url);
         wvDesc.loadUrl(url);
     }
 
-    public void synCookies(Context context) {
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            CookieSyncManager.createInstance(context);
-        }
-        CookieManager cookieManager = CookieManager.getInstance();
-        cookieManager.setAcceptCookie(true);// 允许接受 Cookie
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            cookieManager.removeSessionCookie();// 移除
-        } else {
-            cookieManager.removeSessionCookies(null);// 移除
-        }
+    public void setCookies(String cookiesPath) {
+//        Map<String, String> cookieMap = new HashMap<>();
+//        String cookie = (String) SPUtils.get(getActivity(), "cookie", "");
+//        if (!TextUtils.isEmpty(cookie)) {
+//            String[] cookieArray = cookie.split(";");// 多个Cookie是使用分号分隔的
+//            for (int i = 0; i < cookieArray.length; i++) {
+//                int position = cookieArray[i].indexOf("=");// 在Cookie中键值使用等号分隔
+//                String cookieName = cookieArray[i].substring(0, position);// 获取键
+//                String cookieValue = cookieArray[i].substring(position + 1);// 获取值
+
+//                String value = cookieName + "=" + cookieValue;// 键值对拼接成 value
+
         if (!TextUtils.isEmpty((String) SPUtils.get(this, "user_cookie_pre", ""))) {
-            cookieManager.setCookie((String) SPUtils.get(this, "user_cookie_pre", "") + "_phone", (String) SPUtils.get(this, "user_phone", ""));
+            String value = (String) SPUtils.get(this, "user_cookie_pre", "") + "phone" + "=" + (String) SPUtils.get(this, "user_phone", "");// 键值对拼接成 value
+            Log.e("cookie", value);
+            CookieManager.getInstance().setCookie(getDomain(cookiesPath), value);// 设置 Cookie
         }
 
-        if (Build.VERSION.SDK_INT < Build.VERSION_CODES.LOLLIPOP) {
-            CookieSyncManager.getInstance().sync();
-        } else {
-            cookieManager.flush();
+//            }
+//        }
+    }
+
+    /**
+     * 获取URL的域名
+     */
+    private String getDomain(String url) {
+        url = url.replace("http://", "").replace("https://", "");
+        if (url.contains("/")) {
+            url = url.substring(0, url.indexOf('/'));
         }
+        return url;
     }
 
     @Override
