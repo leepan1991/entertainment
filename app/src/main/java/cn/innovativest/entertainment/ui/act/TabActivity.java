@@ -92,11 +92,7 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
 
     @Override
     public void initData() {
-//        ClipboardManager clipboard =
-//                (ClipboardManager) getSystemService(Context.CLIPBOARD_SERVICE);
-//        if (!TextUtils.isEmpty(clipboard.getText())) {
         mPresenter.onGetBottomTab();
-//        }
     }
 
     /**
@@ -105,6 +101,7 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
     private void initTab() {
 
         tbMain.setContainer(mVpHome);
+        mVpHome.setCurrentItem(2);
     }
 
     @Override
@@ -117,7 +114,7 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
                 if (resultCode == LoginActivity.RESULT_CODE &&
                         data.getBooleanExtra(LoginActivity.IS_LOGINED, false)) {
                     if (mFragments != null) {
-                        mVpHome.setCurrentItem(data.getIntExtra("item_id", 0));
+                        mVpHome.setCurrentItem(data.getIntExtra("item_id", 2));
                     }
                 }
                 break;
@@ -202,7 +199,7 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
         if (intent != null) {
             boolean isExit = intent.getBooleanExtra(EXIT_LOGIN, false);
             if (isExit) {
-                mVpHome.setCurrentItem(0);
+                mVpHome.setCurrentItem(2);
             }
         }
     }

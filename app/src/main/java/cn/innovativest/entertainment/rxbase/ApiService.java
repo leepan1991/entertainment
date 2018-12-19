@@ -15,6 +15,7 @@ import okhttp3.RequestBody;
 import retrofit2.http.Body;
 import retrofit2.http.GET;
 import retrofit2.http.POST;
+import retrofit2.http.Query;
 
 /**
  * Created by Administrator on 2018/3/1.
@@ -53,6 +54,6 @@ public interface ApiService {
     @POST(APIFactory.RECHARGE)
     Observable<HttpRespond> recharge(@Body RequestBody requestBody);
 
-    @POST(APIFactory.APP)
-    Observable<HttpRespond<List<AppBean>>> getAppList(@Body RequestBody requestBody);
+    @GET(APIFactory.APP)
+    Observable<HttpRespond<List<AppBean>>> getAppList(@Query("name") String name);
 }

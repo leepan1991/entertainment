@@ -10,10 +10,6 @@ import android.widget.ImageView;
 import android.widget.LinearLayout;
 import android.widget.RelativeLayout;
 import android.widget.TextView;
-import android.widget.Toast;
-
-import org.json.JSONException;
-import org.json.JSONObject;
 
 import butterknife.BindView;
 import butterknife.OnClick;
@@ -246,7 +242,7 @@ public class MyCenterFragment extends BaseMvpFragment<MyCenterView, MyCenterPres
 
     @OnClick(R.id.rltRechargeNotice)
     public void goToRechargeNotice() {
-        startActivity(new Intent(getActivity(), HtmlActivity.class).putExtra("url", "http://ath.pub/home/index/aboutATH"));
+        startActivity(new Intent(getActivity(), HtmlActivity.class).putExtra("url", "http://ath.pub/home/index/recharge"));
     }
 
     @OnClick(R.id.rltApp)

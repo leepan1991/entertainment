@@ -274,7 +274,7 @@
                         android:layout_height="wrap_content"
                         android:layout_centerVertical="true"
                         android:layout_marginRight="5dp"
-                        android:layout_toLeftOf="@id/ivRightMineRMB"
+                        android:layout_toLeftOf="@+id/ivRightMineRMB"
                         android:layout_toRightOf="@+id/lltMineRMB"
                         android:gravity="right|center_vertical"
                         android:maxLines="1"
