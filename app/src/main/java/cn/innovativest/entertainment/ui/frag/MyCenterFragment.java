@@ -126,6 +126,9 @@ public class MyCenterFragment extends BaseMvpFragment<MyCenterView, MyCenterPres
                 }
             });
             rltLogout.setVisibility(View.GONE);
+            Intent loginIntent = new Intent(getActivity(), LoginActivity.class);
+            loginIntent.putExtra("item_id", 4);
+            startActivityForResult(loginIntent, LoginActivity.REQUEST_CODE);
         }
     }
 
