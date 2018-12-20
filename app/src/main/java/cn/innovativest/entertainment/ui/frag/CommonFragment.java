@@ -2,6 +2,7 @@ package cn.innovativest.entertainment.ui.frag;
 
 import android.content.Context;
 import android.content.Intent;
+import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -10,6 +11,8 @@ import android.view.View;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebBackForwardList;
+import android.webkit.WebChromeClient;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -147,6 +150,20 @@ public class CommonFragment extends BaseFragment {
 
 
         wvDesc.setWebViewClient(new MyWebViewClient(wvDesc));
+        wvDesc.setWebChromeClient(new WebChromeClient() {
+            @Override
+            public View getVideoLoadingProgressView() {
+                FrameLayout frameLayout = new FrameLayout(getActivity());
+                frameLayout.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+                return frameLayout;
+            }
+
+            @Override
+            public void onShowCustomView(View view, CustomViewCallback callback) {
+                super.onShowCustomView(view, callback);
+                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//播放时横屏幕，如果需要改变横竖屏，只需该参数就行了
+            }
+        });
 
 //        wvDesc.getSettings().setSupportZoom(true);
 //        wvDesc.getSettings().setLoadWithOverviewMode(true);
