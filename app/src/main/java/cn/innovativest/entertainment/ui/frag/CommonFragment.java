@@ -2,16 +2,18 @@ package cn.innovativest.entertainment.ui.frag;
 
 import android.content.Context;
 import android.content.Intent;
-import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
-import android.webkit.WebBackForwardList;
 import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -41,6 +43,16 @@ public class CommonFragment extends BaseFragment {
 
     @BindView(R.id.wvDesc)
     BridgeWebView wvDesc;
+
+    /**
+     * 视频全屏参数
+     */
+    protected static final FrameLayout.LayoutParams COVER_SCREEN_PARAMS = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+    private View customView;
+    private FrameLayout fullscreenContainer;
+
+    private WebChromeClient.CustomViewCallback customViewCallback;
+
 
     String url;
 
@@ -104,7 +116,6 @@ public class CommonFragment extends BaseFragment {
                             }
                         }
                     }
-//                    function.onCallBack("submitFromWeb exe, response data 中文 from Java");
                 }
             });
             wvDesc.loadUrl(url);
@@ -122,19 +133,6 @@ public class CommonFragment extends BaseFragment {
     @Override
     protected void initView(Bundle arguments) {
 
-        //传入
-//        Bundle bundle = getArguments();
-//        if (bundle != null) {
-//            url = bundle.getString("url");
-//            if (TextUtils.isEmpty(url)) {
-//                ToastUtils.showLong(getActivity(), "数据错误");
-//                return;
-//            }
-//            LogUtils.e("url=====" + url);
-//        } else {
-//            ToastUtils.showLong(getActivity(), "数据错误");
-//            return;
-//        }
         btnBack.setImageResource(R.mipmap.login_arrow_left);
         tvwTitle.setVisibility(View.VISIBLE);
         btnBack.setOnClickListener(new View.OnClickListener() {
@@ -146,74 +144,104 @@ public class CommonFragment extends BaseFragment {
 
         wvDesc.getSettings().setJavaScriptEnabled(true);
         wvDesc.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
-//        wvDesc.setDefaultHandler(new DefaultHandler());
+        wvDesc.getSettings().setJavaScriptEnabled(true);
+//        告诉JavaScript自动打开窗口。这适用于JavaScript函数的窗口。open()。
+        wvDesc.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+//      告诉webview 是否使用插件
+        wvDesc.getSettings().setPluginState(WebSettings.PluginState.ON);
+//        启用或禁用WebView中的文件访问
+        wvDesc.getSettings().setAllowFileAccess(true);
+//      是否调节内容 是否全屏
+        wvDesc.getSettings().setLoadWithOverviewMode(true);
+//        重写缓存使用的方式。      WebSettings.LOAD_NO_CACHE 不要使用缓存，从网络加载。
+        wvDesc.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
 
 
         wvDesc.setWebViewClient(new MyWebViewClient(wvDesc));
         wvDesc.setWebChromeClient(new WebChromeClient() {
+            /*** 视频播放相关的方法 **/
             @Override
             public View getVideoLoadingProgressView() {
                 FrameLayout frameLayout = new FrameLayout(getActivity());
-                frameLayout.setLayoutParams(new FrameLayout.LayoutParams(FrameLayout.LayoutParams.MATCH_PARENT, FrameLayout.LayoutParams.MATCH_PARENT));
+                frameLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
                 return frameLayout;
             }
 
             @Override
             public void onShowCustomView(View view, CustomViewCallback callback) {
-                super.onShowCustomView(view, callback);
-                getActivity().setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_LANDSCAPE);//播放时横屏幕，如果需要改变横竖屏，只需该参数就行了
+                showCustomView(view, callback);
+            }
+
+            @Override
+            public void onHideCustomView() {
+                hideCustomView();
             }
         });
-
-//        wvDesc.getSettings().setSupportZoom(true);
-//        wvDesc.getSettings().setLoadWithOverviewMode(true);
-//        wvDesc.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-//        wvDesc.getSettings().setDefaultTextEncodingName("UTF-8");
-//        wvDesc.getSettings().setDomStorageEnabled(true);
-//        wvDesc.getSettings().setUseWideViewPort(true);
-//        wvDesc.getSettings().setLoadWithOverviewMode(true);
-
-//        wvDesc.setListener(getActivity(), this);
-//        wvDesc.loadUrl(url);
-
-//        wvDesc.setWebChromeClient(new WebChromeClient() {
-//
-//            @Override
-//            public void onReceivedTitle(WebView view, String title) {
-//                super.onReceivedTitle(view, title);
-//            }
-//
-//            @Override
-//            public void onProgressChanged(WebView view, int newProgress) {
-//                super.onProgressChanged(view, newProgress);
-//            }
-//        });
-//        wvDesc.setWebViewClient(new WebViewClient() {
-//            @Override
-//            public void onReceivedError(WebView view, int errorCode,
-//                                        String description, String failingUrl) {
-//                super.onReceivedError(view, errorCode, description, failingUrl);
-//            }
-//
-//            @Override
-//            public void onReceivedSslError(WebView view,
-//                                           SslErrorHandler handler, SslError error) {
-//                super.onReceivedSslError(view, handler, error);
-//            }
-//
-//            @Override
-//            public void onPageStarted(WebView view, String url, Bitmap favicon) {
-//                super.onPageStarted(view, url, favicon);
-//            }
-//
-//            @Override
-//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//                // 重写shouldOverrideUrlLoading方法，使点击链接后不使用其他的浏览器打开。
-//                // view.loadUrl(url);
-//                return false;
-//            }
-//        });
     }
+
+    /**
+     * 视频播放全屏
+     */
+    private void showCustomView(View view, WebChromeClient.CustomViewCallback callback) {
+
+        // if a view already exists then immediately terminate the new one
+        if (customView != null) {
+            callback.onCustomViewHidden();
+            return;
+        }
+        getActivity().getWindow().getDecorView();
+
+        //获取虚拟按键高度，防止遮挡
+//        if (ScreenUtils.hasNavBar(this)) {
+//            COVER_SCREEN_PARAMS.setMargins(0, 0, 0, ScreenUtils.getNavigationBarHeight(this));
+//        }
+
+        FrameLayout decor = (FrameLayout) getActivity().getWindow().getDecorView();
+        fullscreenContainer = new FullscreenHolder(getActivity());
+        fullscreenContainer.addView(view, COVER_SCREEN_PARAMS);
+        decor.addView(fullscreenContainer, COVER_SCREEN_PARAMS);
+        customView = view;
+        setStatusBarVisibility(false);
+        customViewCallback = callback;
+    }
+
+    /**
+     * 隐藏视频全屏
+     */
+    private void hideCustomView() {
+        if (customView == null) {
+            return;
+        }
+        setStatusBarVisibility(true);
+        FrameLayout decor = (FrameLayout) getActivity().getWindow().getDecorView();
+        decor.removeView(fullscreenContainer);
+        fullscreenContainer = null;
+        customView = null;
+        customViewCallback.onCustomViewHidden();
+        wvDesc.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 全屏容器界面
+     */
+    static class FullscreenHolder extends FrameLayout {
+
+        public FullscreenHolder(Context ctx) {
+            super(ctx);
+            setBackgroundColor(ctx.getResources().getColor(android.R.color.black));
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent evt) {
+            return true;
+        }
+    }
+
+    private void setStatusBarVisibility(boolean visible) {
+        int flag = visible ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        getActivity().getWindow().setFlags(flag, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
 
     @Override
     public void onResume() {
@@ -227,26 +255,8 @@ public class CommonFragment extends BaseFragment {
         wvDesc.onPause();
         // ...
         super.onPause();
-//        CookieManager cookieManager = CookieManager.getInstance();
-//        String cookieStr = cookieManager.getCookie(getDomain(url));
-//        SPUtils.put(getActivity(), "cookie", cookieStr);
-    }
 
-//    public class JavaScriptInterface {
-//        Context mContext;
-//
-//        JavaScriptInterface(Context c) {
-//            mContext = c;
-//        }
-//
-//        @JavascriptInterface
-//        public void changeActivity() {
-//            Intent i = new Intent(getActivity(), LoginActivity.class);
-//            i.putExtra("item_id", getItem_id());
-//            startActivityForResult(i, LoginActivity.REQUEST_CODE);
-////            startActivity(i);
-//        }
-//    }
+    }
 
     class MyWebViewClient extends BridgeWebViewClient {
 
@@ -278,16 +288,6 @@ public class CommonFragment extends BaseFragment {
     }
 
     public void setCookies(String cookiesPath) {
-//        Map<String, String> cookieMap = new HashMap<>();
-//        String cookie = (String) SPUtils.get(getActivity(), "cookie", "");
-//        if (!TextUtils.isEmpty(cookie)) {
-//            String[] cookieArray = cookie.split(";");// 多个Cookie是使用分号分隔的
-//            for (int i = 0; i < cookieArray.length; i++) {
-//                int position = cookieArray[i].indexOf("=");// 在Cookie中键值使用等号分隔
-//                String cookieName = cookieArray[i].substring(0, position);// 获取键
-//                String cookieValue = cookieArray[i].substring(position + 1);// 获取值
-
-//                String value = cookieName + "=" + cookieValue;// 键值对拼接成 value
 
         if (!TextUtils.isEmpty((String) SPUtils.get(getActivity(), "user_cookie_pre", ""))) {
             String value = (String) SPUtils.get(getActivity(), "user_cookie_pre", "") + "phone" + "=" + (String) SPUtils.get(getActivity(), "user_phone", "");// 键值对拼接成 value
@@ -295,8 +295,6 @@ public class CommonFragment extends BaseFragment {
             CookieManager.getInstance().setCookie(getDomain(cookiesPath), value);// 设置 Cookie
         }
 
-//            }
-//        }
     }
 
     /**

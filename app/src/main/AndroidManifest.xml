@@ -44,9 +44,9 @@
         </activity>
         <activity
             android:name=".ui.act.TabActivity"
+            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
             android:launchMode="singleTask"
             android:screenOrientation="sensor"
-            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
             android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
             android:name=".ui.act.LoginActivity"
@@ -69,7 +69,8 @@
             android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
             android:name=".ui.act.HtmlActivity"
-            android:screenOrientation="portrait"
+            android:configChanges="orientation|screenSize|keyboardHidden|keyboard"
+            android:screenOrientation="sensor"
             android:windowSoftInputMode="stateUnchanged|adjustResize" />
         <activity
             android:name=".ui.act.VipActivity"

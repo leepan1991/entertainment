@@ -1,7 +1,6 @@
 package cn.innovativest.entertainment.base;
 
 import android.app.ProgressDialog;
-import android.content.pm.ActivityInfo;
 import android.os.Build;
 import android.os.Bundle;
 import android.support.annotation.LayoutRes;
@@ -27,7 +26,7 @@ public abstract class BaseActivity extends AppCompatActivity {
 
     @Override
     protected void onCreate(@Nullable Bundle savedInstanceState) {
-        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
+//        setRequestedOrientation(ActivityInfo.SCREEN_ORIENTATION_PORTRAIT);
         initBasePresenter();
         super.onCreate(savedInstanceState);
         setContentView(getLayoutId());

@@ -1,11 +1,18 @@
 package cn.innovativest.entertainment.ui.act;
 
+import android.content.Context;
 import android.content.Intent;
 import android.graphics.Bitmap;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.MotionEvent;
 import android.view.View;
+import android.view.ViewGroup;
+import android.view.WindowManager;
 import android.webkit.CookieManager;
+import android.webkit.WebChromeClient;
+import android.webkit.WebSettings;
+import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
@@ -26,6 +33,15 @@ public class HtmlActivity extends BaseActivity implements AdvancedWebView.Listen
 
     @BindView(R.id.wvDesc)
     AdvancedWebView wvDesc;
+
+    /**
+     * 视频全屏参数
+     */
+    protected static final FrameLayout.LayoutParams COVER_SCREEN_PARAMS = new FrameLayout.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT);
+    private View customView;
+    private FrameLayout fullscreenContainer;
+
+    private WebChromeClient.CustomViewCallback customViewCallback;
 
     String url;
 
@@ -61,29 +77,114 @@ public class HtmlActivity extends BaseActivity implements AdvancedWebView.Listen
         }
         wvDesc.setListener(this, this);
         setCookies(url);
+        wvDesc.getSettings().setJavaScriptEnabled(true);
+        wvDesc.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+        wvDesc.getSettings().setJavaScriptEnabled(true);
+//        告诉JavaScript自动打开窗口。这适用于JavaScript函数的窗口。open()。
+        wvDesc.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
+//      告诉webview 是否使用插件
+        wvDesc.getSettings().setPluginState(WebSettings.PluginState.ON);
+//        启用或禁用WebView中的文件访问
+        wvDesc.getSettings().setAllowFileAccess(true);
+//      是否调节内容 是否全屏
+        wvDesc.getSettings().setLoadWithOverviewMode(true);
+//        重写缓存使用的方式。      WebSettings.LOAD_NO_CACHE 不要使用缓存，从网络加载。
+        wvDesc.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+
+
+        wvDesc.setWebChromeClient(new WebChromeClient() {
+            /*** 视频播放相关的方法 **/
+            @Override
+            public View getVideoLoadingProgressView() {
+                FrameLayout frameLayout = new FrameLayout(HtmlActivity.this);
+                frameLayout.setLayoutParams(new ViewGroup.LayoutParams(ViewGroup.LayoutParams.MATCH_PARENT, ViewGroup.LayoutParams.MATCH_PARENT));
+                return frameLayout;
+            }
+
+            @Override
+            public void onShowCustomView(View view, CustomViewCallback callback) {
+                showCustomView(view, callback);
+            }
+
+            @Override
+            public void onHideCustomView() {
+                hideCustomView();
+            }
+        });
         wvDesc.loadUrl(url);
     }
 
-    public void setCookies(String cookiesPath) {
-//        Map<String, String> cookieMap = new HashMap<>();
-//        String cookie = (String) SPUtils.get(getActivity(), "cookie", "");
-//        if (!TextUtils.isEmpty(cookie)) {
-//            String[] cookieArray = cookie.split(";");// 多个Cookie是使用分号分隔的
-//            for (int i = 0; i < cookieArray.length; i++) {
-//                int position = cookieArray[i].indexOf("=");// 在Cookie中键值使用等号分隔
-//                String cookieName = cookieArray[i].substring(0, position);// 获取键
-//                String cookieValue = cookieArray[i].substring(position + 1);// 获取值
+    /**
+     * 视频播放全屏
+     */
+    private void showCustomView(View view, WebChromeClient.CustomViewCallback callback) {
 
-//                String value = cookieName + "=" + cookieValue;// 键值对拼接成 value
+        // if a view already exists then immediately terminate the new one
+        if (customView != null) {
+            callback.onCustomViewHidden();
+            return;
+        }
+        getWindow().getDecorView();
+
+        //获取虚拟按键高度，防止遮挡
+//        if (ScreenUtils.hasNavBar(this)) {
+//            COVER_SCREEN_PARAMS.setMargins(0, 0, 0, ScreenUtils.getNavigationBarHeight(this));
+//        }
+
+        FrameLayout decor = (FrameLayout) getWindow().getDecorView();
+        fullscreenContainer = new FullscreenHolder(this);
+        fullscreenContainer.addView(view, COVER_SCREEN_PARAMS);
+        decor.addView(fullscreenContainer, COVER_SCREEN_PARAMS);
+        customView = view;
+        setStatusBarVisibility(false);
+        customViewCallback = callback;
+    }
+
+    /**
+     * 隐藏视频全屏
+     */
+    private void hideCustomView() {
+        if (customView == null) {
+            return;
+        }
+        setStatusBarVisibility(true);
+        FrameLayout decor = (FrameLayout) getWindow().getDecorView();
+        decor.removeView(fullscreenContainer);
+        fullscreenContainer = null;
+        customView = null;
+        customViewCallback.onCustomViewHidden();
+        wvDesc.setVisibility(View.VISIBLE);
+    }
+
+    /**
+     * 全屏容器界面
+     */
+    static class FullscreenHolder extends FrameLayout {
+
+        public FullscreenHolder(Context ctx) {
+            super(ctx);
+            setBackgroundColor(ctx.getResources().getColor(android.R.color.black));
+        }
+
+        @Override
+        public boolean onTouchEvent(MotionEvent evt) {
+            return true;
+        }
+    }
+
+    private void setStatusBarVisibility(boolean visible) {
+        int flag = visible ? 0 : WindowManager.LayoutParams.FLAG_FULLSCREEN;
+        getWindow().setFlags(flag, WindowManager.LayoutParams.FLAG_FULLSCREEN);
+    }
+
+
+    public void setCookies(String cookiesPath) {
 
         if (!TextUtils.isEmpty((String) SPUtils.get(this, "user_cookie_pre", ""))) {
             String value = (String) SPUtils.get(this, "user_cookie_pre", "") + "phone" + "=" + (String) SPUtils.get(this, "user_phone", "");// 键值对拼接成 value
             Log.e("cookie", value);
             CookieManager.getInstance().setCookie(getDomain(cookiesPath), value);// 设置 Cookie
         }
-
-//            }
-//        }
     }
 
     /**
