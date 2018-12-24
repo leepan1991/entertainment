@@ -125,11 +125,12 @@ public class CommonFragment extends BaseFragment {
             wvDesc.registerHandler("app_ad", new BridgeHandler() {
                 @Override
                 public void handler(String data, CallBackFunction function) {
+                    LogUtils.e(data);
                     if (!TextUtils.isEmpty(data)) {
                         WebJsonBean webJsonBean = new Gson().fromJson(data, WebJsonBean.class);
                         if (webJsonBean != null) {
-                            if (webJsonBean.getType().equals("url")) {
-                                Uri uri = Uri.parse(webJsonBean.getZh_cn());
+                            if (!TextUtils.isEmpty(webJsonBean.getType())) {
+                                Uri uri = Uri.parse(webJsonBean.getType());
                                 Intent intent = new Intent(Intent.ACTION_VIEW, uri);
                                 startActivity(intent);
                             }
