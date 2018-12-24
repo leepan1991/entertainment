@@ -2,6 +2,7 @@ package cn.innovativest.entertainment.ui.frag;
 
 import android.content.Context;
 import android.content.Intent;
+import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
@@ -40,6 +41,9 @@ public class CommonFragment extends BaseFragment {
 
     @BindView(R.id.tvwTitle)
     TextView tvwTitle;
+
+    @BindView(R.id.btnAction)
+    ImageButton btnAction;
 
     @BindView(R.id.wvDesc)
     BridgeWebView wvDesc;
@@ -118,6 +122,21 @@ public class CommonFragment extends BaseFragment {
                     }
                 }
             });
+            wvDesc.registerHandler("app_ad", new BridgeHandler() {
+                @Override
+                public void handler(String data, CallBackFunction function) {
+                    if (!TextUtils.isEmpty(data)) {
+                        WebJsonBean webJsonBean = new Gson().fromJson(data, WebJsonBean.class);
+                        if (webJsonBean != null) {
+                            if (webJsonBean.getType().equals("url")) {
+                                Uri uri = Uri.parse(webJsonBean.getZh_cn());
+                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                                startActivity(intent);
+                            }
+                        }
+                    }
+                }
+            });
             wvDesc.loadUrl(url);
         }
     }
@@ -135,10 +154,24 @@ public class CommonFragment extends BaseFragment {
 
         btnBack.setImageResource(R.mipmap.login_arrow_left);
         tvwTitle.setVisibility(View.VISIBLE);
+        tvwTitle.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                back();
+            }
+        });
         btnBack.setOnClickListener(new View.OnClickListener() {
             @Override
             public void onClick(View view) {
                 back();
+            }
+        });
+        btnAction.setVisibility(View.VISIBLE);
+        btnAction.setImageResource(R.mipmap.ic_refresh_new);
+        btnAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wvDesc.reload();
             }
         });
 

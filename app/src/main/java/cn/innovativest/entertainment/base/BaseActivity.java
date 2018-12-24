@@ -33,7 +33,7 @@ public abstract class BaseActivity extends AppCompatActivity {
         if (isRegisterEventBus()) {
             EventBusUtils.register(this);
         }
-        setStatusBar(getStatusBarBackground(), isLightMode());
+//        setStatusBar(getStatusBarBackground(), isLightMode());
         ButterKnife.bind(this);
         initView();
         initData();

@@ -55,7 +55,7 @@ public class TabActivity extends BaseMvpActivity<TabView, TabPresenter> implemen
 
     @Override
     protected int getStatusBarBackground() {
-        return Color.TRANSPARENT;
+        return Color.BLACK;
     }
 
     @Override

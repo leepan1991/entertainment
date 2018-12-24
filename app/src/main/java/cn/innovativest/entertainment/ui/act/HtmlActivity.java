@@ -2,7 +2,7 @@ package cn.innovativest.entertainment.ui.act;
 
 import android.content.Context;
 import android.content.Intent;
-import android.graphics.Bitmap;
+import android.net.Uri;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -16,14 +16,19 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.github.lzyzsd.jsbridge.BridgeHandler;
+import com.github.lzyzsd.jsbridge.BridgeWebView;
+import com.github.lzyzsd.jsbridge.CallBackFunction;
+import com.google.gson.Gson;
+
 import butterknife.BindView;
 import cn.innovativest.entertainment.R;
 import cn.innovativest.entertainment.base.BaseActivity;
+import cn.innovativest.entertainment.bean.WebJsonBean;
 import cn.innovativest.entertainment.utils.SPUtils;
 import cn.innovativest.entertainment.utils.ToastUtils;
-import im.delight.android.webview.AdvancedWebView;
 
-public class HtmlActivity extends BaseActivity implements AdvancedWebView.Listener {
+public class HtmlActivity extends BaseActivity {
 
     @BindView(R.id.btnBack)
     ImageButton btnBack;
@@ -31,8 +36,11 @@ public class HtmlActivity extends BaseActivity implements AdvancedWebView.Listen
     @BindView(R.id.tvwTitle)
     TextView tvwTitle;
 
+    @BindView(R.id.btnAction)
+    ImageButton btnAction;
+
     @BindView(R.id.wvDesc)
-    AdvancedWebView wvDesc;
+    BridgeWebView wvDesc;
 
     /**
      * 视频全屏参数
@@ -70,12 +78,19 @@ public class HtmlActivity extends BaseActivity implements AdvancedWebView.Listen
                 finish();
             }
         });
+        btnAction.setVisibility(View.VISIBLE);
+        btnAction.setImageResource(R.mipmap.ic_refresh_new);
+        btnAction.setOnClickListener(new View.OnClickListener() {
+            @Override
+            public void onClick(View v) {
+                wvDesc.reload();
+            }
+        });
         url = getIntent().getStringExtra("url");
         if (TextUtils.isEmpty(url)) {
             ToastUtils.showLong(this, "数据错误");
             return;
         }
-        wvDesc.setListener(this, this);
         setCookies(url);
         wvDesc.getSettings().setJavaScriptEnabled(true);
         wvDesc.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
@@ -109,6 +124,21 @@ public class HtmlActivity extends BaseActivity implements AdvancedWebView.Listen
             @Override
             public void onHideCustomView() {
                 hideCustomView();
+            }
+        });
+        wvDesc.registerHandler("app_ad", new BridgeHandler() {
+            @Override
+            public void handler(String data, CallBackFunction function) {
+                if (!TextUtils.isEmpty(data)) {
+                    WebJsonBean webJsonBean = new Gson().fromJson(data, WebJsonBean.class);
+                    if (webJsonBean != null) {
+                        if (webJsonBean.getType().equals("url")) {
+                            Uri uri = Uri.parse(webJsonBean.getZh_cn());
+                            Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+                            startActivity(intent);
+                        }
+                    }
+                }
             }
         });
         wvDesc.loadUrl(url);
@@ -214,7 +244,6 @@ public class HtmlActivity extends BaseActivity implements AdvancedWebView.Listen
 
     @Override
     public void onDestroy() {
-        wvDesc.onDestroy();
         // ...
         super.onDestroy();
     }
@@ -222,32 +251,6 @@ public class HtmlActivity extends BaseActivity implements AdvancedWebView.Listen
     @Override
     public void onActivityResult(int requestCode, int resultCode, Intent intent) {
         super.onActivityResult(requestCode, resultCode, intent);
-        wvDesc.onActivityResult(requestCode, resultCode, intent);
         // ...
-    }
-
-    @Override
-    public void onPageStarted(String url, Bitmap favicon) {
-
-    }
-
-    @Override
-    public void onPageFinished(String url) {
-
-    }
-
-    @Override
-    public void onPageError(int errorCode, String description, String failingUrl) {
-
-    }
-
-    @Override
-    public void onDownloadRequested(String url, String suggestedFilename, String mimeType, long contentLength, String contentDisposition, String userAgent) {
-
-    }
-
-    @Override
-    public void onExternalPageRequest(String url) {
-
     }
 }
