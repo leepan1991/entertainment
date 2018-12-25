@@ -7,6 +7,7 @@ import android.os.Build;
 import android.os.Bundle;
 import android.text.TextUtils;
 import android.util.Log;
+import android.view.KeyEvent;
 import android.view.MotionEvent;
 import android.view.View;
 import android.view.ViewGroup;
@@ -15,6 +16,7 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
@@ -57,7 +59,7 @@ public class CommonFragment extends BaseFragment {
 
     private WebChromeClient.CustomViewCallback customViewCallback;
 
-
+    boolean scroll = false;
     String url;
 
     private int item_id = 0;
@@ -190,7 +192,25 @@ public class CommonFragment extends BaseFragment {
 //        重写缓存使用的方式。      WebSettings.LOAD_NO_CACHE 不要使用缓存，从网络加载。
         wvDesc.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
 
+//        wvDesc.setOnTouchListener(new View.OnTouchListener() {
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                return true;
+//            }
+//        });
 
+        wvDesc.setOnTouchListener(new View.OnTouchListener() {
+            @Override
+            public boolean onTouch(final View v, final MotionEvent event) {
+
+                if (event.getAction() == MotionEvent.ACTION_MOVE) {
+                    scroll = true;
+                } else if (event.getAction() == MotionEvent.ACTION_UP) {
+                    scroll = false;
+                }///if
+                return false;
+            }
+        });
         wvDesc.setWebViewClient(new MyWebViewClient(wvDesc));
         wvDesc.setWebChromeClient(new WebChromeClient() {
             /*** 视频播放相关的方法 **/
@@ -297,6 +317,22 @@ public class CommonFragment extends BaseFragment {
         public MyWebViewClient(BridgeWebView webView) {
             super(webView);
         }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (!scroll) {
+                view.loadUrl(url);
+            }
+            return true;
+        }
+
+//
+//        @Override
+//        public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
+//            if(scroll)
+//                return true;
+//            return false;
+//        }
     }
 
     public void synCookies(Context context) {

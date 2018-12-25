@@ -8,10 +8,11 @@
 
     <include layout="@layout/view_actionbar_menu_back" />
 
-    <ScrollView
+    <cn.innovativest.entertainment.widget.MyScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
         android:layout_height="match_parent"
+        android:descendantFocusability="blocksDescendants"
         android:fillViewport="true"
         android:scrollbars="none">
 
@@ -35,6 +36,6 @@
 
         </LinearLayout>
 
-    </ScrollView>
+    </cn.innovativest.entertainment.widget.MyScrollView>
 
 </LinearLayout>
