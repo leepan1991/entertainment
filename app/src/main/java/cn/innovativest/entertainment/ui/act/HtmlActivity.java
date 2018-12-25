@@ -12,12 +12,14 @@ import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
+import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.google.gson.Gson;
 
@@ -51,6 +53,7 @@ public class HtmlActivity extends BaseActivity {
 
     private WebChromeClient.CustomViewCallback customViewCallback;
 
+    boolean scroll = false;
     String url;
 
     @Override
@@ -105,8 +108,19 @@ public class HtmlActivity extends BaseActivity {
         wvDesc.getSettings().setLoadWithOverviewMode(true);
 //        重写缓存使用的方式。      WebSettings.LOAD_NO_CACHE 不要使用缓存，从网络加载。
         wvDesc.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        wvDesc.setOnTouchListener(new View.OnTouchListener() {
 
+            @Override
+            public boolean onTouch(View v, MotionEvent event) {
+                if (event.getAction() == MotionEvent.ACTION_UP)
+                    scroll = false;
+                else
+                    scroll = true;
 
+                return false;
+            }
+        });
+        wvDesc.setWebViewClient(new MyWebViewClient(wvDesc));
         wvDesc.setWebChromeClient(new WebChromeClient() {
             /*** 视频播放相关的方法 **/
             @Override
@@ -168,6 +182,29 @@ public class HtmlActivity extends BaseActivity {
         customView = view;
         setStatusBarVisibility(false);
         customViewCallback = callback;
+    }
+
+    class MyWebViewClient extends BridgeWebViewClient {
+
+        public MyWebViewClient(BridgeWebView webView) {
+            super(webView);
+        }
+
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (!scroll) {
+                view.loadUrl(url);
+            }
+            return true;
+        }
+//
+//
+//        @Override
+//        public boolean shouldOverrideKeyEvent(WebView view, KeyEvent event) {
+//            if (scroll)
+//                return true;
+//            return false;
+//        }
     }
 
     /**
