@@ -15,14 +15,17 @@ import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
 import android.webkit.WebSettings;
+import android.webkit.WebView;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
+import android.widget.ScrollView;
 import android.widget.TextView;
 
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
+import com.github.lzyzsd.jsbridge.DefaultHandler;
 import com.google.gson.Gson;
 
 import butterknife.BindView;
@@ -35,6 +38,9 @@ import cn.innovativest.entertainment.utils.LogUtils;
 import cn.innovativest.entertainment.utils.SPUtils;
 
 public class CommonFragment extends BaseFragment {
+
+    @BindView(R.id.scrollView)
+    ScrollView scrollView;
 
     @BindView(R.id.btnBack)
     ImageButton btnBack;
@@ -189,19 +195,20 @@ public class CommonFragment extends BaseFragment {
         wvDesc.getSettings().setLoadWithOverviewMode(true);
 //        重写缓存使用的方式。      WebSettings.LOAD_NO_CACHE 不要使用缓存，从网络加载。
         wvDesc.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-        wvDesc.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP)
-                    scroll = false;
-                else
-                    scroll = true;
-
-                return false;
-            }
-        });
-
+//        scrollView.setOnTouchListener(new View.OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (event.getAction() == MotionEvent.ACTION_UP)
+//                    wvDesc.setClickable(true);
+//                else if (event.getAction() == MotionEvent.ACTION_MOVE) {
+//                    wvDesc.setEnabled(false);
+//                }else{
+//                    wvDesc.setEnabled(true);
+//                }
+//                return false;
+//            }
+//        });
 
         wvDesc.setWebViewClient(new MyWebViewClient(wvDesc));
         wvDesc.setWebChromeClient(new WebChromeClient() {
@@ -310,14 +317,16 @@ public class CommonFragment extends BaseFragment {
             super(webView);
         }
 
+        //        @Override
+//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//            return super.shouldOverrideUrlLoading(view, url);
+//        }
 //        @Override
 //        public boolean shouldOverrideUrlLoading(WebView view, String url) {
 //            if (!scroll) {
 //                view.loadUrl(url);
-//                return false;
-//            } else {
-//                return true;
 //            }
+//            return super.shouldOverrideUrlLoading(view, url);
 //
 //        }
 //

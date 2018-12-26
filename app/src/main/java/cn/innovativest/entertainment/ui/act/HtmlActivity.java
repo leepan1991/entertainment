@@ -108,18 +108,18 @@ public class HtmlActivity extends BaseActivity {
         wvDesc.getSettings().setLoadWithOverviewMode(true);
 //        重写缓存使用的方式。      WebSettings.LOAD_NO_CACHE 不要使用缓存，从网络加载。
         wvDesc.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-        wvDesc.setOnTouchListener(new View.OnTouchListener() {
-
-            @Override
-            public boolean onTouch(View v, MotionEvent event) {
-                if (event.getAction() == MotionEvent.ACTION_UP)
-                    scroll = false;
-                else
-                    scroll = true;
-
-                return false;
-            }
-        });
+//        wvDesc.setOnTouchListener(new View.OnTouchListener() {
+//
+//            @Override
+//            public boolean onTouch(View v, MotionEvent event) {
+//                if (event.getAction() == MotionEvent.ACTION_SCROLL)
+//                    scroll = false;
+//                else
+//                    scroll = true;
+//
+//                return false;
+//            }
+//        });
         wvDesc.setWebViewClient(new MyWebViewClient(wvDesc));
         wvDesc.setWebChromeClient(new WebChromeClient() {
             /*** 视频播放相关的方法 **/
@@ -190,13 +190,13 @@ public class HtmlActivity extends BaseActivity {
             super(webView);
         }
 
-        @Override
-        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-            if (!scroll) {
-                view.loadUrl(url);
-            }
-            return true;
-        }
+//        @Override
+//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//            if (!scroll) {
+//                view.loadUrl(url);
+//            }
+//            return super.shouldOverrideUrlLoading(view, url);
+//        }
 //
 //
 //        @Override
