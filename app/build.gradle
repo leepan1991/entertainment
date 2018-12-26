@@ -107,10 +107,9 @@ dependencies {
     implementation 'com.umeng.analytics:analytics:6.1.4'
     implementation 'com.github.lzyzsd:jsbridge:1.0.4'
     implementation 'com.github.wendux:DSBridge-Android:3.0-SNAPSHOT'
+    implementation 'com.daimajia.numberprogressbar:library:1.4@aar'
     //PushSDK必须依赖基础组件库，所以需要加入对应依赖
     implementation 'com.umeng.sdk:common:1.5.3'
-    //PushSDK必须依赖utdid所以需要加入对应依赖
-    //    implementation 'com.umeng.sdk:utdid:1.1.5.3'
     //PushSDK
     implementation 'com.umeng.sdk:push:4.2.0'
     implementation 'com.tencent.bugly:crashreport:2.6.6.1'

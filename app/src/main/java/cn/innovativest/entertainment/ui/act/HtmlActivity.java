@@ -17,6 +17,7 @@ import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.TextView;
 
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
@@ -31,6 +32,9 @@ import cn.innovativest.entertainment.utils.SPUtils;
 import cn.innovativest.entertainment.utils.ToastUtils;
 
 public class HtmlActivity extends BaseActivity {
+
+    @BindView(R.id.number_progress_bar)
+    NumberProgressBar mProgressBar;
 
     @BindView(R.id.btnBack)
     ImageButton btnBack;
@@ -108,6 +112,10 @@ public class HtmlActivity extends BaseActivity {
         wvDesc.getSettings().setLoadWithOverviewMode(true);
 //        重写缓存使用的方式。      WebSettings.LOAD_NO_CACHE 不要使用缓存，从网络加载。
         wvDesc.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
+        // 资源加载
+        wvDesc.getSettings().setLoadsImagesAutomatically(true); // 是否自动加载图片
+        wvDesc.getSettings().setBlockNetworkImage(false);       // 禁止加载网络图片
+        wvDesc.getSettings().setBlockNetworkLoads(false);       // 禁止加载所有网络资源
 //        wvDesc.setOnTouchListener(new View.OnTouchListener() {
 //
 //            @Override
@@ -120,7 +128,7 @@ public class HtmlActivity extends BaseActivity {
 //                return false;
 //            }
 //        });
-        wvDesc.setWebViewClient(new MyWebViewClient(wvDesc));
+//        wvDesc.setWebViewClient(new MyWebViewClient(wvDesc));
         wvDesc.setWebChromeClient(new WebChromeClient() {
             /*** 视频播放相关的方法 **/
             @Override
@@ -133,6 +141,21 @@ public class HtmlActivity extends BaseActivity {
             @Override
             public void onShowCustomView(View view, CustomViewCallback callback) {
                 showCustomView(view, callback);
+            }
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress >= 95) {
+                    mProgressBar.setVisibility(View.GONE);
+                } else {
+                    if (mProgressBar.getVisibility() == View.GONE) {
+                        mProgressBar.setVisibility(View.VISIBLE);
+                    }
+
+                    mProgressBar.setProgress(newProgress);
+                }
+
+                super.onProgressChanged(view, newProgress);
             }
 
             @Override

@@ -5,6 +5,7 @@ import android.content.Intent;
 import android.net.Uri;
 import android.os.Build;
 import android.os.Bundle;
+import android.support.annotation.RequiresApi;
 import android.text.TextUtils;
 import android.util.Log;
 import android.view.MotionEvent;
@@ -14,19 +15,26 @@ import android.view.WindowManager;
 import android.webkit.CookieManager;
 import android.webkit.CookieSyncManager;
 import android.webkit.WebChromeClient;
+import android.webkit.WebResourceRequest;
 import android.webkit.WebSettings;
 import android.webkit.WebView;
+import android.webkit.WebViewClient;
 import android.widget.FrameLayout;
 import android.widget.ImageButton;
 import android.widget.ScrollView;
 import android.widget.TextView;
 
+import com.daimajia.numberprogressbar.NumberProgressBar;
 import com.github.lzyzsd.jsbridge.BridgeHandler;
+import com.github.lzyzsd.jsbridge.BridgeUtil;
 import com.github.lzyzsd.jsbridge.BridgeWebView;
 import com.github.lzyzsd.jsbridge.BridgeWebViewClient;
 import com.github.lzyzsd.jsbridge.CallBackFunction;
 import com.github.lzyzsd.jsbridge.DefaultHandler;
 import com.google.gson.Gson;
+
+import java.io.UnsupportedEncodingException;
+import java.net.URLDecoder;
 
 import butterknife.BindView;
 import cn.innovativest.entertainment.R;
@@ -36,11 +44,17 @@ import cn.innovativest.entertainment.ui.act.LoginActivity;
 import cn.innovativest.entertainment.ui.act.VipActivity;
 import cn.innovativest.entertainment.utils.LogUtils;
 import cn.innovativest.entertainment.utils.SPUtils;
+import wendu.dsbridge.DWebView;
+import wendu.dsbridge.OnReturnValue;
 
 public class CommonFragment extends BaseFragment {
 
-    @BindView(R.id.scrollView)
-    ScrollView scrollView;
+//    @BindView(R.id.scrollView)
+//    ScrollView scrollView;
+
+
+    @BindView(R.id.number_progress_bar)
+    NumberProgressBar mProgressBar;
 
     @BindView(R.id.btnBack)
     ImageButton btnBack;
@@ -98,6 +112,36 @@ public class CommonFragment extends BaseFragment {
         if (wvDesc != null) {
 //            synCookies(getActivity());
             setCookies(url);
+//            wvDesc.callHandler("app_page", new OnReturnValue<String>() {
+//                @Override
+//                public void onValue(String data) {
+//                    LogUtils.e("data from web = " + data);
+//                    if (!TextUtils.isEmpty(data)) {
+//                        WebJsonBean webJsonBean = new Gson().fromJson(data, WebJsonBean.class);
+//                        if (webJsonBean != null) {
+//                            if (webJsonBean.getType().equals("login")) {
+//                                Intent i = new Intent(getActivity(), LoginActivity.class);
+//                                i.putExtra("item_id", getItem_id());
+//                                i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                startActivityForResult(i, LoginActivity.REQUEST_CODE);
+//                            } else if (webJsonBean.getType().equals("open")) {
+//                                if ((boolean) SPUtils.get(getActivity(), "is_login", false)) {
+//                                    Intent i = new Intent(getActivity(), VipActivity.class);
+//                                    i.putExtra("item_id", getItem_id());
+//                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                    startActivityForResult(i, LoginActivity.REQUEST_CODE);
+//                                } else {
+//                                    Intent i = new Intent(getActivity(), LoginActivity.class);
+//                                    i.putExtra("item_id", getItem_id());
+//                                    i.addFlags(Intent.FLAG_ACTIVITY_NEW_TASK);
+//                                    startActivityForResult(i, LoginActivity.REQUEST_CODE);
+//                                }
+//
+//                            }
+//                        }
+//                    }
+//                }
+//            });
             wvDesc.registerHandler("app_page", new BridgeHandler() {
                 @Override
                 public void handler(String data, CallBackFunction function) {
@@ -128,6 +172,22 @@ public class CommonFragment extends BaseFragment {
                     }
                 }
             });
+//            wvDesc.callHandler("app_ad", new OnReturnValue<String>() {
+//                @Override
+//                public void onValue(String data) {
+//                    LogUtils.e(data);
+//                    if (!TextUtils.isEmpty(data)) {
+//                        WebJsonBean webJsonBean = new Gson().fromJson(data, WebJsonBean.class);
+//                        if (webJsonBean != null) {
+//                            if (!TextUtils.isEmpty(webJsonBean.getType())) {
+//                                Uri uri = Uri.parse(webJsonBean.getType());
+//                                Intent intent = new Intent(Intent.ACTION_VIEW, uri);
+//                                startActivity(intent);
+//                            }
+//                        }
+//                    }
+//                }
+//            });
             wvDesc.registerHandler("app_ad", new BridgeHandler() {
                 @Override
                 public void handler(String data, CallBackFunction function) {
@@ -181,7 +241,6 @@ public class CommonFragment extends BaseFragment {
                 wvDesc.reload();
             }
         });
-
         wvDesc.getSettings().setJavaScriptEnabled(true);
         wvDesc.getSettings().setJavaScriptCanOpenWindowsAutomatically(true);
         wvDesc.getSettings().setJavaScriptEnabled(true);
@@ -195,23 +254,40 @@ public class CommonFragment extends BaseFragment {
         wvDesc.getSettings().setLoadWithOverviewMode(true);
 //        重写缓存使用的方式。      WebSettings.LOAD_NO_CACHE 不要使用缓存，从网络加载。
         wvDesc.getSettings().setCacheMode(WebSettings.LOAD_DEFAULT);
-//        scrollView.setOnTouchListener(new View.OnTouchListener() {
+        // 资源加载
+        wvDesc.getSettings().setLoadsImagesAutomatically(true); // 是否自动加载图片
+        wvDesc.getSettings().setBlockNetworkImage(false);       // 禁止加载网络图片
+        wvDesc.getSettings().setBlockNetworkLoads(false);       // 禁止加载所有网络资源
+//        wvDesc.setOnTouchListener(new View.OnTouchListener() {
 //
 //            @Override
 //            public boolean onTouch(View v, MotionEvent event) {
 //                if (event.getAction() == MotionEvent.ACTION_UP)
-//                    wvDesc.setClickable(true);
+//                    scroll = false;
 //                else if (event.getAction() == MotionEvent.ACTION_MOVE) {
-//                    wvDesc.setEnabled(false);
-//                }else{
-//                    wvDesc.setEnabled(true);
+//                    scroll = true;
+//                } else {
+//                    scroll = false;
 //                }
 //                return false;
 //            }
 //        });
 
-        wvDesc.setWebViewClient(new MyWebViewClient(wvDesc));
+//        wvDesc.setWebViewClient(new MyWebViewClient(wvDesc));
+//        wvDesc.setWebViewClient(new WebViewClient() {
+//            @Override
+//            public boolean shouldOverrideUrlLoading(WebView view, String url) {
+//                if (!scroll) {
+//                    view.loadUrl(url);
+//                    return true;
+//                } else {
+//                    return super.shouldOverrideUrlLoading(view, url);
+//                }
+//
+//            }
+//        });
         wvDesc.setWebChromeClient(new WebChromeClient() {
+
             /*** 视频播放相关的方法 **/
             @Override
             public View getVideoLoadingProgressView() {
@@ -228,6 +304,21 @@ public class CommonFragment extends BaseFragment {
             @Override
             public void onHideCustomView() {
                 hideCustomView();
+            }
+
+            @Override
+            public void onProgressChanged(WebView view, int newProgress) {
+                if (newProgress >= 95) {
+                    mProgressBar.setVisibility(View.GONE);
+                } else {
+                    if (mProgressBar.getVisibility() == View.GONE) {
+                        mProgressBar.setVisibility(View.VISIBLE);
+                    }
+
+                    mProgressBar.setProgress(newProgress);
+                }
+
+                super.onProgressChanged(view, newProgress);
             }
         });
     }
@@ -321,14 +412,17 @@ public class CommonFragment extends BaseFragment {
 //        public boolean shouldOverrideUrlLoading(WebView view, String url) {
 //            return super.shouldOverrideUrlLoading(view, url);
 //        }
-//        @Override
-//        public boolean shouldOverrideUrlLoading(WebView view, String url) {
-//            if (!scroll) {
-//                view.loadUrl(url);
-//            }
+        @Override
+        public boolean shouldOverrideUrlLoading(WebView view, String url) {
+            if (!url.startsWith("http://film.ath.pub")) {
+                view.loadUrl(url);
+                return true;
+            } else {
+                return false;
+            }
 //            return super.shouldOverrideUrlLoading(view, url);
-//
-//        }
+
+        }
 //
 //
 //        @Override

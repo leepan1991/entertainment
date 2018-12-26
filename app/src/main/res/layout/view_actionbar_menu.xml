@@ -2,7 +2,7 @@
 <LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
     android:layout_width="match_parent"
     android:layout_height="48dp"
-    android:background="@color/bg_banner_top"
+    android:background="@color/white"
     android:gravity="center_vertical">
 
     <ImageButton
@@ -23,7 +23,7 @@
         android:gravity="left"
         android:maxLines="1"
         android:text="占位符"
-        android:textColor="@android:color/white"
+        android:textColor="@color/color_75_pure_black"
         android:textSize="18sp" />
 
     <RelativeLayout
@@ -43,10 +43,10 @@
             android:id="@+id/tvwMsgCount"
             android:layout_width="20dp"
             android:layout_height="20dp"
-            android:layout_alignParentRight="true"
             android:layout_alignTop="@+id/btnAction"
-            android:layout_marginRight="3dp"
+            android:layout_alignParentRight="true"
             android:layout_marginTop="3dp"
+            android:layout_marginRight="3dp"
             android:gravity="center"
             android:textColor="@android:color/white"
             android:textSize="10sp"
