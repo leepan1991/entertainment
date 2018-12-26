@@ -8,6 +8,11 @@
 
     <include layout="@layout/view_actionbar_menu_back" />
 
+    <com.daimajia.numberprogressbar.NumberProgressBar
+        android:id="@+id/number_progress_bar"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content" />
+
     <ScrollView
         android:id="@+id/scrollView"
         android:layout_width="match_parent"
@@ -23,11 +28,6 @@
             android:layout_height="wrap_content"
             android:layout_gravity="center_horizontal"
             android:orientation="vertical">
-
-            <com.daimajia.numberprogressbar.NumberProgressBar
-                android:id="@+id/number_progress_bar"
-                android:layout_width="wrap_content"
-                android:layout_height="wrap_content" />
 
             <com.github.lzyzsd.jsbridge.BridgeWebView
                 android:id="@+id/wvDesc"
