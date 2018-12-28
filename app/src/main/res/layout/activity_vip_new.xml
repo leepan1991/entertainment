@@ -1,0 +1,300 @@
+<?xml version="1.0" encoding="utf-8"?>
+<LinearLayout xmlns:android="http://schemas.android.com/apk/res/android"
+    android:layout_width="match_parent"
+    android:layout_height="match_parent"
+    android:background="@android:color/white"
+    android:descendantFocusability="blocksDescendants"
+    android:orientation="vertical">
+
+    <include layout="@layout/view_actionbar_menu" />
+
+    <ScrollView
+        android:layout_width="match_parent"
+        android:layout_height="match_parent"
+        android:scrollbars="none">
+
+        <LinearLayout
+            android:layout_width="match_parent"
+            android:layout_height="match_parent"
+            android:orientation="vertical">
+
+            <RelativeLayout
+                android:layout_width="match_parent"
+                android:layout_height="120dp">
+
+                <RelativeLayout
+                    android:id="@+id/rlt_avatar"
+                    android:layout_width="60dp"
+                    android:layout_height="60dp"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="15dp">
+
+                    <ImageView
+                        android:id="@+id/iv_avatar"
+                        android:layout_width="match_parent"
+                        android:layout_height="match_parent"
+                        android:layout_alignParentLeft="true"
+                        android:layout_centerVertical="true"
+                        android:scaleType="fitXY"
+                        android:src="@mipmap/mine_avatar" />
+
+
+                </RelativeLayout>
+
+
+                <RelativeLayout
+                    android:id="@+id/rltNameContent"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerVertical="true"
+                    android:layout_marginLeft="25dp"
+                    android:layout_toRightOf="@+id/rlt_avatar"
+                    android:paddingTop="10dp"
+                    android:paddingBottom="10dp">
+
+                    <LinearLayout
+                        android:id="@+id/lltNameOne"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvName"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:maxLines="1"
+                            android:text="无言的结局"
+                            android:textColor="#F08519"
+                            android:textSize="16sp" />
+
+                        <ImageView
+                            android:id="@+id/ivRealed"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_centerVertical="true"
+                            android:layout_marginLeft="5dp"
+                            android:contentDescription="@string/app_name"
+                            android:scaleType="fitXY"
+                            android:src="@mipmap/mine_realnamed" />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lltNameTwo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lltNameOne"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvNotice"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="会员："
+                            android:textColor="@color/color_gray_6"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvVIPTime"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="5dp"
+                            android:gravity="center"
+                            android:maxLines="1"
+                            android:text="1000"
+                            android:textColor="@color/color_gray_6"
+                            android:textSize="14sp"
+
+                            />
+                    </LinearLayout>
+
+                    <LinearLayout
+                        android:id="@+id/lltValueTwo"
+                        android:layout_width="wrap_content"
+                        android:layout_height="wrap_content"
+                        android:layout_below="@+id/lltNameTwo"
+                        android:layout_marginTop="6dp"
+                        android:gravity="center"
+                        android:orientation="horizontal">
+
+                        <TextView
+                            android:id="@+id/tvwL"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:maxLines="1"
+                            android:text="积分："
+                            android:textColor="@color/color_gray_6"
+                            android:textSize="14sp" />
+
+                        <TextView
+                            android:id="@+id/tvScore"
+                            android:layout_width="wrap_content"
+                            android:layout_height="wrap_content"
+                            android:layout_alignParentLeft="true"
+                            android:layout_marginLeft="5dp"
+                            android:maxLines="1"
+                            android:text="1000"
+                            android:textColor="@color/color_gray_6"
+                            android:textSize="14sp" />
+                    </LinearLayout>
+
+                </RelativeLayout>
+            </RelativeLayout>
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="1dp"
+                android:background="@color/color_gray_8" />
+
+            <TextView
+                android:layout_width="wrap_content"
+                android:layout_height="wrap_content"
+                android:layout_alignParentLeft="true"
+                android:layout_marginLeft="15dp"
+                android:layout_marginTop="10dp"
+                android:layout_marginBottom="10dp"
+                android:maxLines="1"
+                android:text="会员卡购买"
+                android:textColor="@color/color_gray_3"
+                android:textSize="16sp" />
+
+            <View
+                android:layout_width="match_parent"
+                android:layout_height="2dp"
+                android:background="@color/color_gray_7" />
+
+            <LinearLayout
+                android:layout_width="match_parent"
+                android:layout_height="match_parent"
+                android:orientation="vertical">
+
+                <cn.innovativest.entertainment.widget.XListView
+                    android:id="@+id/xListview"
+                    android:layout_width="match_parent"
+                    android:divider="@color/color_transparent"
+                    android:layout_height="wrap_content">
+
+                </cn.innovativest.entertainment.widget.XListView>
+
+
+                <TextView
+                    android:id="@+id/tvwMoneyDesc"
+                    android:layout_width="wrap_content"
+                    android:layout_height="wrap_content"
+                    android:layout_alignParentLeft="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="15dp"
+                    android:gravity="center"
+                    android:maxLines="1"
+                    android:text="支付金额：25元或1积分"
+                    android:textColor="@color/color_gray_3"
+                    android:textSize="16sp" />
+
+                <Button
+                    android:id="@+id/btnCoin"
+                    style="@style/mBt"
+                    android:layout_width="300dp"
+                    android:layout_height="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:background="@drawable/shape_coin"
+                    android:onClick="onClick"
+                    android:text="金币购买"
+                    android:textColor="@color/white"
+                    android:textSize="16dp" />
+
+                <Button
+                    android:id="@+id/btnScore"
+                    style="@style/mBt"
+                    android:layout_width="300dp"
+                    android:layout_height="40dp"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginBottom="5dp"
+                    android:background="@drawable/shape_score"
+                    android:onClick="onClick"
+                    android:text="积分购买"
+                    android:textColor="@color/white"
+                    android:textSize="16dp" />
+
+                <View
+                    android:layout_width="match_parent"
+                    android:layout_height="10dp"
+                    android:background="@color/color_gray_9" />
+
+                <ImageView
+                    android:layout_width="match_parent"
+                    android:layout_height="100dp"
+                    android:layout_alignParentRight="true"
+                    android:layout_centerVertical="true"
+                    android:layout_gravity="center"
+                    android:contentDescription="@string/app_name"
+                    android:scaleType="fitXY"
+                    android:src="@mipmap/tequan" />
+
+                <WebView
+                    android:id="@+id/wvDesc"
+                    android:layout_width="match_parent"
+                    android:layout_height="wrap_content"
+                    android:layout_centerHorizontal="true"
+                    android:layout_gravity="center_horizontal"
+                    android:layout_marginLeft="15dp"
+                    android:layout_marginTop="15dp"
+                    android:layout_marginRight="15dp"></WebView>
+
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_gravity="left"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_marginTop="15dp"-->
+                <!--android:gravity="center"-->
+                <!--android:maxLines="1"-->
+                <!--android:text="会员开通："-->
+                <!--android:textColor="@color/color_gray_3"-->
+                <!--android:textSize="16sp" />-->
+
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_gravity="left"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:gravity="center"-->
+                <!--android:maxLines="1"-->
+                <!--android:text="1.直接续费"-->
+                <!--android:textColor="@color/color_gray_3"-->
+                <!--android:textSize="16sp" />-->
+
+                <!--<TextView-->
+                <!--android:layout_width="wrap_content"-->
+                <!--android:layout_height="wrap_content"-->
+                <!--android:layout_alignParentLeft="true"-->
+                <!--android:layout_gravity="left"-->
+                <!--android:layout_marginLeft="15dp"-->
+                <!--android:layout_marginTop="5dp"-->
+                <!--android:layout_marginBottom="20dp"-->
+                <!--android:gravity="center"-->
+                <!--android:maxLines="1"-->
+                <!--android:text="2.通过兑换码激活码来开通"-->
+                <!--android:textColor="@color/color_gray_3"-->
+                <!--android:textSize="16sp" />-->
+            </LinearLayout>
+        </LinearLayout>
+    </ScrollView>
+
+</LinearLayout>
