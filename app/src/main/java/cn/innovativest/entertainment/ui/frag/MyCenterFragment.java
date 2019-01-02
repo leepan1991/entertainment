@@ -19,6 +19,7 @@ import cn.innovativest.entertainment.base.BaseMvpFragment;
 import cn.innovativest.entertainment.bean.UserInfoBean;
 import cn.innovativest.entertainment.common.HttpRespond;
 import cn.innovativest.entertainment.presenter.MyCenterPresenter;
+import cn.innovativest.entertainment.ui.act.AboutActivity;
 import cn.innovativest.entertainment.ui.act.AppActivity;
 import cn.innovativest.entertainment.ui.act.HtmlActivity;
 import cn.innovativest.entertainment.ui.act.LoginActivity;
@@ -251,6 +252,11 @@ public class MyCenterFragment extends BaseMvpFragment<MyCenterView, MyCenterPres
     @OnClick(R.id.rltApp)
     public void goToApp() {
         startActivity(new Intent(getActivity(), AppActivity.class));
+    }
+
+    @OnClick(R.id.rltAbout)
+    public void goToAbout() {
+        startActivity(new Intent(getActivity(), AboutActivity.class));
     }
 
     @Override

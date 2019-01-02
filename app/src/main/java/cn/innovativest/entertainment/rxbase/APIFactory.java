@@ -32,5 +32,4 @@ public class APIFactory {
 
     public static final String APP = "index.php?i=1&c=entry&eid=21&op=open&apis=android";
 
-
 }

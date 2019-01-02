@@ -19,6 +19,8 @@ public class HttpRespond<T> implements Serializable {
 
     @SerializedName("states")
     public int states;
+    @SerializedName("status")
+    public int status;
     @SerializedName("message")
     public String message;
     @SerializedName("data")
